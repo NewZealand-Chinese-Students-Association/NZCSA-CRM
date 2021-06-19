@@ -16,6 +16,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const handleLogin = async (f) => {
     setLoading(true);
     f.preventDefault();
@@ -41,7 +42,11 @@ const Login = () => {
 
       window.location.href = '/app/dashboard';
     } catch (e) {
-      alert(e.response.data.error);
+      setError(e.response.data.error);
+      setLoading(false);
+      setTimeout(() => {
+        setError('');
+      }, 5000);
     }
   };
 
@@ -86,6 +91,15 @@ const Login = () => {
                   >
                     Sign in on the internal platform
                   </Typography>
+                  {error && (
+                  <Typography
+                    color="error"
+                    align="center"
+                    variant="button"
+                  >
+                    {error}
+                  </Typography>
+                  )}
                 </Box>
                 <TextField
                   error={Boolean(touched.email && errors.email)}
