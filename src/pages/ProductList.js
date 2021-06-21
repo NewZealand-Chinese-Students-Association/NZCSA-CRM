@@ -24,7 +24,7 @@ const ProductList = () => {
   return (
     <>
       <Helmet>
-        <title>Products | Material Kit</title>
+        <title>Events</title>
       </Helmet>
       <Box
         sx={{
@@ -57,7 +57,7 @@ const ProductList = () => {
             sx={{
               display: 'flex',
               justifyContent: 'center',
-              pt: 3
+              pt: 1
             }}
           >
             <Pagination

@@ -1,20 +1,55 @@
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-// import { Helmet } from 'react-helmet';
-import * as Yup from 'yup';
+import { useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 import {
   Box,
   Button,
-  Checkbox,
   Container,
   FormHelperText,
-  Link,
   TextField,
   Typography
 } from '@material-ui/core';
+import { useState } from 'react';
+import axios from 'axios';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const ProductNewFrom = () => {
   const navigate = useNavigate();
+  const [eventName, seteventName] = useState('');
+  const [eventLocation, seteventLocation] = useState('');
+  const [eventDescription, seteventDescription] = useState('');
+  const [startTime, setstartTime] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (f) => {
+    f.preventDefault();
+    setLoading(true);
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+      },
+    };
+    setTimeout(() => {
+      setLoading(false);
+    }, 8000);
+
+    try {
+      const info = {
+        eventName, eventLocation, eventDescription, startTime
+      };
+      await axios.post('https://nzcsa-backend.herokuapp.com/api/admin/add-events',
+        info,
+        config);
+      window.location.href = '/app/products';
+    } catch (e) {
+      setError(e.response.data.error);
+      setLoading(false);
+      setTimeout(() => {
+        setError('');
+      }, 5000);
+    }
+  };
 
   return (
     <>
@@ -29,22 +64,6 @@ const ProductNewFrom = () => {
       >
         <Container maxWidth="sm">
           <Formik
-            initialValues={{
-              email: '',
-              firstName: '',
-              lastName: '',
-              password: '',
-              policy: false
-            }}
-            validationSchema={
-              Yup.object().shape({
-                email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-                firstName: Yup.string().max(255).required('First name is required'),
-                lastName: Yup.string().max(255).required('Last name is required'),
-                password: Yup.string().max(255).required('password is required'),
-                policy: Yup.boolean().oneOf([true], 'This field must be checked')
-              })
-            }
             onSubmit={() => {
               navigate('/app/dashboard', { replace: true });
             }}
@@ -52,11 +71,8 @@ const ProductNewFrom = () => {
             {({
               errors,
               handleBlur,
-              handleChange,
-              handleSubmit,
               isSubmitting,
               touched,
-              values
             }) => (
               <form onSubmit={handleSubmit}>
                 <Box sx={{ mb: 3 }}>
@@ -66,13 +82,15 @@ const ProductNewFrom = () => {
                   >
                     Create new event
                   </Typography>
+                  {error && (
                   <Typography
-                    color="textSecondary"
-                    gutterBottom
-                    variant="body2"
+                    color="error"
+                    align="center"
+                    variant="button"
                   >
-                    Use your email to create new account
+                    {error}
                   </Typography>
+                  )}
                 </Box>
                 <TextField
                   error={Boolean(touched.firstName && errors.firstName)}
@@ -82,77 +100,43 @@ const ProductNewFrom = () => {
                   margin="normal"
                   name="firstName"
                   onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.firstName}
+                  onChange={(e) => { seteventName(e.target.value); }}
                   variant="outlined"
                 />
                 <TextField
                   error={Boolean(touched.lastName && errors.lastName)}
                   fullWidth
                   helperText={touched.lastName && errors.lastName}
-                  label="Last name"
+                  label="Event Description"
                   margin="normal"
                   name="lastName"
                   onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.lastName}
+                  onChange={(e) => { seteventDescription(e.target.value); }}
                   variant="outlined"
                 />
                 <TextField
                   error={Boolean(touched.email && errors.email)}
                   fullWidth
                   helperText={touched.email && errors.email}
-                  label="Email Address"
+                  label="Event Location"
                   margin="normal"
                   name="email"
                   onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="email"
-                  value={values.email}
+                  onChange={(e) => { seteventLocation(e.target.value); }}
                   variant="outlined"
                 />
                 <TextField
                   error={Boolean(touched.password && errors.password)}
                   fullWidth
                   helperText={touched.password && errors.password}
-                  label="Password"
+                  label="Start Time"
                   margin="normal"
                   name="password"
                   onBlur={handleBlur}
-                  onChange={handleChange}
+                  onChange={(e) => { setstartTime(e.target.value); }}
                   type="password"
-                  value={values.password}
                   variant="outlined"
                 />
-                <Box
-                  sx={{
-                    alignItems: 'center',
-                    display: 'flex',
-                    ml: -1
-                  }}
-                >
-                  <Checkbox
-                    checked={values.policy}
-                    name="policy"
-                    onChange={handleChange}
-                  />
-                  <Typography
-                    color="textSecondary"
-                    variant="body1"
-                  >
-                    I have read the
-                    {' '}
-                    <Link
-                      color="primary"
-                      component={RouterLink}
-                      to="#"
-                      underline="always"
-                      variant="h6"
-                    >
-                      Terms and Conditions
-                    </Link>
-                  </Typography>
-                </Box>
                 {Boolean(touched.policy && errors.policy) && (
                   <FormHelperText error>
                     {errors.policy}
@@ -167,23 +151,13 @@ const ProductNewFrom = () => {
                     type="submit"
                     variant="contained"
                   >
-                    Sign up now
+                    {loading ? (
+                      <CircularProgress color="inherit" size="2rem" />
+                    ) : (
+                      <>Add</>
+                    )}
                   </Button>
                 </Box>
-                <Typography
-                  color="textSecondary"
-                  variant="body1"
-                >
-                  Have an account?
-                  {' '}
-                  <Link
-                    component={RouterLink}
-                    to="/login"
-                    variant="h6"
-                  >
-                    Sign in
-                  </Link>
-                </Typography>
               </form>
             )}
           </Formik>

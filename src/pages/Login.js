@@ -25,11 +25,9 @@ const Login = () => {
         'Content-Type': 'application/json',
       },
     };
-
-    console.log(email, password);
     setTimeout(() => {
       setLoading(false);
-    }, 5000);
+    }, 10000);
 
     try {
       const { data } = await axios.post(
@@ -37,6 +35,21 @@ const Login = () => {
         { email, password },
         config
       );
+
+      // TODO: backend: login api should return isAdmin value
+
+      // console.log(data.isAdmin);
+
+      // if (!data.isAdmin) {
+      //   const errorInfo = {
+      //     response: {
+      //       data: {
+      //         error: 'You are not admin',
+      //       }
+      //     }
+      //   };
+      //   throw (errorInfo);
+      // }
 
       localStorage.setItem('authToken', data.token);
 
