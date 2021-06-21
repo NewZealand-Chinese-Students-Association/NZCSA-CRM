@@ -1,0 +1,23 @@
+For admin use
+
+Dashboard:
+    - Total number of member
+
+Customers (change name to Members):
+
+    - Show all members info (include not membership)
+        - Name
+        - Email
+        - Phone
+        - is membership
+        - attended events
+
+    - delete member Button on the top
+        - be able to delte user when selected.
+        - Are you sure you want to delete? pop up box (for double checking)
+
+    - functionality of flipping page
+
+    - Add Customers Button (change to Add Member)
+        - be able to add new member (like registration form)
+        - pop up form
