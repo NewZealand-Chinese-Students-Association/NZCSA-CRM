@@ -4,7 +4,8 @@ import {
   Settings as SettingsIcon,
   ShoppingBag as ShoppingBagIcon,
   User as UserIcon,
-  Users as UsersIcon
+  Users as UsersIcon,
+  Code as CodeIcon
 } from 'react-feather';
 
 const user = {
@@ -38,6 +39,11 @@ const items = [
     href: '/app/settings',
     icon: SettingsIcon,
     title: 'Settings'
+  },
+  {
+    href: '/app/developers',
+    icon: CodeIcon,
+    title: 'Developers'
   },
   {
     href: '/404',

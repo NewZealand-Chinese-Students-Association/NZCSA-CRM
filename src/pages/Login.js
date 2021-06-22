@@ -25,10 +25,6 @@ const Login = () => {
         'Content-Type': 'application/json',
       },
     };
-    setTimeout(() => {
-      setLoading(false);
-    }, 10000);
-
     try {
       const { data } = await axios.post(
         'https://nzcsa-backend.herokuapp.com/api/auth/login',

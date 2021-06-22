@@ -9,6 +9,7 @@ import NotFound from './pages/NotFound';
 import ProductList from './pages/ProductList';
 import Settings from './pages/Settings';
 import Register from './pages/Register';
+import DeveloperView from './pages/Developers';
 
 const isLoggedIn = localStorage.getItem('authToken');
 
@@ -22,6 +23,7 @@ const routes = [
       { path: 'dashboard', element: <Dashboard /> },
       { path: 'products', element: <ProductList /> },
       { path: 'settings', element: <Settings /> },
+      { path: 'developers', element: <DeveloperView /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },
