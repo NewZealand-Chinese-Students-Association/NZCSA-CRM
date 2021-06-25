@@ -96,7 +96,7 @@ const ProductNewFrom = () => {
                   error={Boolean(touched.firstName && errors.firstName)}
                   fullWidth
                   helperText={touched.firstName && errors.firstName}
-                  label="Event name"
+                  label="Event Name"
                   margin="normal"
                   name="firstName"
                   onBlur={handleBlur}
@@ -127,14 +127,37 @@ const ProductNewFrom = () => {
                 />
                 <TextField
                   error={Boolean(touched.password && errors.password)}
-                  fullWidth
+                  halfWidth
                   helperText={touched.password && errors.password}
-                  label="Start Time"
+                  label="Event Start Time"
+                  // margin="normal"
+                  name="password"
+                  // onBlur={handleBlur}
+                  onChange={(e) => { setstartTime(e.target.value); }}
+                  // variant="outlined"
+                  type="date"
+                />
+                <TextField
+                  error={Boolean(touched.password && errors.password)}
+                  halfWidth
+                  helperText={touched.password && errors.password}
+                  label="Event Start Time"
                   margin="normal"
                   name="password"
                   onBlur={handleBlur}
                   onChange={(e) => { setstartTime(e.target.value); }}
-                  type="password"
+                  variant="outlined"
+                  type="time"
+                />
+                <TextField
+                  error={Boolean(touched.firstName && errors.firstName)}
+                  fullWidth
+                  helperText={touched.firstName && errors.firstName}
+                  label="Event Price"
+                  margin="normal"
+                  name="firstName"
+                  onBlur={handleBlur}
+                  onChange={(e) => { seteventName(e.target.value); }}
                   variant="outlined"
                 />
                 {Boolean(touched.policy && errors.policy) && (

@@ -32,10 +32,8 @@ const ProductCard = ({ product, ...rest }) => {
 
     try {
       const info = product._id;
-      console.log(info);
-      await axios.delete('https://nzcsa-backend.herokuapp.com/api/admin/delete-events',
-        config,
-        info);
+      await axios.delete(`https://nzcsa-backend.herokuapp.com/api/admin/delete-events/${info}`,
+        config);
       window.location.href = '/app/products';
     } catch (e) {
       console.log(e.response.data.error);

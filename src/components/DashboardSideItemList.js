@@ -8,12 +8,6 @@ import {
   Code as CodeIcon
 } from 'react-feather';
 
-const user = {
-  avatar: '/static/images/avatars/avatar_6.png',
-  jobTitle: 'Senior Web Developer',
-  name: 'Melo Guan'
-};
-
 const items = [
   {
     href: '/app/dashboard',
@@ -52,7 +46,4 @@ const items = [
   }
 ];
 
-export {
-  items,
-  user
-};
+export default items;

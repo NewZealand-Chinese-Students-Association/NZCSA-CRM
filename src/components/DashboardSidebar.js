@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
@@ -11,16 +11,31 @@ import {
   List,
   Typography
 } from '@material-ui/core';
-import { user, items } from './DashboardSideItemList';
+import axios from 'axios';
+import items from './DashboardSideItemList';
 import NavItem from './NavItem';
 
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const location = useLocation();
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+    },
+  };
+  const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
       onMobileClose();
     }
+    const fetchData = async () => {
+      axios.get('https://nzcsa-backend.herokuapp.com/api/private/get-user-info', config).then((res) => {
+        setUserInfo(res.data.data);
+        console.log(res.data.data);
+      });
+    };
+    fetchData();
   }, [location.pathname]);
 
   const content = (
@@ -41,7 +56,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
       >
         <Avatar
           component={RouterLink}
-          src={user.avatar}
+          src={userInfo.avatar}
           sx={{
             cursor: 'pointer',
             width: 64,
@@ -52,14 +67,17 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
         <Typography
           color="textPrimary"
           variant="h5"
+          style={{ textTransform: 'capitalize' }}
         >
-          {user.name}
+          {userInfo.firstname }
+          {' '}
+          {userInfo.lastname}
         </Typography>
         <Typography
           color="textSecondary"
           variant="body2"
         >
-          {user.jobTitle}
+          {userInfo.email}
         </Typography>
       </Box>
       <Divider />
