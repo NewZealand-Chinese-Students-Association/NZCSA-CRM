@@ -1,7 +1,9 @@
+// import sds from '../../public/static/images/avatars';
+
 const Logo = (props) => (
   <img
     alt="Logo"
-    src="http://nzcsa.com/img/logo.png"
+    src="/static/images/logo.png"
     {...props}
   />
 );
