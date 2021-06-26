@@ -16,7 +16,9 @@ const ProductNewFrom = () => {
   const navigate = useNavigate();
   const [eventName, seteventName] = useState('');
   const [eventLocation, seteventLocation] = useState('');
+  const [eventPrice, seteventPrice] = useState('');
   const [eventDescription, seteventDescription] = useState('');
+  const [startDate, setstartDate] = useState('');
   const [startTime, setstartTime] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -35,9 +37,13 @@ const ProductNewFrom = () => {
     }, 8000);
 
     try {
+      const time = startDate + startTime;
+
       const info = {
-        eventName, eventLocation, eventDescription, startTime
+        eventName, eventLocation, eventDescription, time, eventPrice
       };
+
+      console.log(info);
       await axios.post('https://nzcsa-backend.herokuapp.com/api/admin/add-events',
         info,
         config);
@@ -59,7 +65,8 @@ const ProductNewFrom = () => {
           display: 'flex',
           flexDirection: 'column',
           height: '100%',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          padding: '10%'
         }}
       >
         <Container maxWidth="sm">
@@ -126,30 +133,6 @@ const ProductNewFrom = () => {
                   variant="outlined"
                 />
                 <TextField
-                  error={Boolean(touched.password && errors.password)}
-                  halfWidth
-                  helperText={touched.password && errors.password}
-                  label="Event Start Time"
-                  // margin="normal"
-                  name="password"
-                  // onBlur={handleBlur}
-                  onChange={(e) => { setstartTime(e.target.value); }}
-                  // variant="outlined"
-                  type="date"
-                />
-                <TextField
-                  error={Boolean(touched.password && errors.password)}
-                  halfWidth
-                  helperText={touched.password && errors.password}
-                  label="Event Start Time"
-                  margin="normal"
-                  name="password"
-                  onBlur={handleBlur}
-                  onChange={(e) => { setstartTime(e.target.value); }}
-                  variant="outlined"
-                  type="time"
-                />
-                <TextField
                   error={Boolean(touched.firstName && errors.firstName)}
                   fullWidth
                   helperText={touched.firstName && errors.firstName}
@@ -157,9 +140,33 @@ const ProductNewFrom = () => {
                   margin="normal"
                   name="firstName"
                   onBlur={handleBlur}
-                  onChange={(e) => { seteventName(e.target.value); }}
+                  onChange={(e) => { seteventPrice(e.target.value); }}
                   variant="outlined"
                 />
+
+                <TextField
+                  style={{ width: '45%' }}
+                  error={Boolean(touched.password && errors.password)}
+                  fullWidth
+                  helperText={touched.password && errors.password}
+                  margin="normal"
+                  name="password"
+                  onChange={(e) => { setstartDate(e.target.value); }}
+                  type="date"
+                />
+                <TextField
+                  error={Boolean(touched.password && errors.password)}
+                  fullWidth
+                  style={{ width: '45%', float: 'right' }}
+                  helperText={touched.password && errors.password}
+                  margin="normal"
+                  name="password"
+                  onBlur={handleBlur}
+                  onChange={(e) => { setstartTime(e.target.value); }}
+                  variant="outlined"
+                  type="time"
+                />
+
                 {Boolean(touched.policy && errors.policy) && (
                   <FormHelperText error>
                     {errors.policy}

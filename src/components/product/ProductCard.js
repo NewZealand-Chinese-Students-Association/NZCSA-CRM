@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import {
-  Avatar,
   Box,
   Button,
   Card,
@@ -13,6 +12,7 @@ import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import axios from 'axios';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useState } from 'react';
+import CardMedia from '@material-ui/core/CardMedia';
 
 const ProductCard = ({ product, ...rest }) => {
   const [error, setError] = useState('');
@@ -52,25 +52,16 @@ const ProductCard = ({ product, ...rest }) => {
       }}
       {...rest}
     >
+      <CardMedia
+        style={{ height: 0, paddingTop: '56%' }}
+        image="http://nzcsa.com/img/career/2017BG1.jpg"
+      />
       <CardContent>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            pb: 3
-          }}
-        >
-          <Avatar
-            alt="Product"
-            src={product.media}
-            variant="square"
-          />
-        </Box>
         <Typography
           align="center"
           color="textPrimary"
           gutterBottom
-          variant="h4"
+          variant="h2"
         >
           {product.eventName}
         </Typography>
@@ -80,6 +71,12 @@ const ProductCard = ({ product, ...rest }) => {
           variant="body1"
         >
           {product.eventDescription}
+        </Typography>
+        <Typography
+          color="textPrimary"
+          variant="h4"
+        >
+          {`NZD$${product.eventPrice}`}
         </Typography>
       </CardContent>
       <Box sx={{ flexGrow: 1 }} />
@@ -104,7 +101,7 @@ const ProductCard = ({ product, ...rest }) => {
               sx={{ pl: 1 }}
               variant="body2"
             >
-              Updated 2hr ago
+              {(new Date(product.startTime)).toLocaleString()}
             </Typography>
           </Grid>
           <Grid
