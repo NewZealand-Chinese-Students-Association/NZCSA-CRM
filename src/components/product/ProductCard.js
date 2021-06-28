@@ -54,7 +54,7 @@ const ProductCard = ({ product, ...rest }) => {
     >
       <CardMedia
         style={{ height: 0, paddingTop: '56%' }}
-        image="http://nzcsa.com/img/career/2017BG1.jpg"
+        image={product.eventImgUrl}
       />
       <CardContent>
         <Typography
@@ -67,6 +67,14 @@ const ProductCard = ({ product, ...rest }) => {
         </Typography>
         <Typography
           align="center"
+          color="textSecondary"
+          gutterBottom
+          variant="body2"
+        >
+          {product.eventLocation}
+        </Typography>
+        <Typography
+          align="center"
           color="textPrimary"
           variant="body1"
         >
@@ -74,7 +82,7 @@ const ProductCard = ({ product, ...rest }) => {
         </Typography>
         <Typography
           color="textPrimary"
-          variant="h4"
+          variant="body1"
         >
           {`NZD$${product.eventPrice}`}
         </Typography>

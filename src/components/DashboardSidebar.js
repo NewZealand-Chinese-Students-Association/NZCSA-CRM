@@ -32,7 +32,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
     const fetchData = async () => {
       axios.get('https://nzcsa-backend.herokuapp.com/api/private/get-user-info', config).then((res) => {
         setUserInfo(res.data.data);
-        console.log(res.data.data);
+        // console.log(res.data.data);
       });
     };
     fetchData();

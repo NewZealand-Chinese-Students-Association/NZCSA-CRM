@@ -36,7 +36,7 @@ const rows = [
   createData(`${api.private}sign-up-membership`, 'POST', 'authToken', '/'),
   createData(`${api.private}get-user-info`, 'GET', 'authToken', '/'),
   createData(`${api.private}sign-up-event`, 'POST', 'authToken', '{"eventId": "60c6d82c9551fe3b634b7b10"}'),
-  createData(`${api.admin}add-events`, 'POST', 'authToken', '{"eventName": "2021pn","eventLocation": "asds","eventDescription": "asdasd","startTime": "05/07/2021"}'),
+  createData(`${api.admin}add-events`, 'POST', 'authToken', '{eventName, eventLocation, eventDescription, time, eventPrice, eventImgUrl}'),
   createData(`${api.admin}delete-events`, 'DELETE', 'authToken', '{"_id": "60c70c334441e941914988e0"}'),
   createData(`${api.admin}show-event-user-info`, 'GET', 'authToken', '/'),
   createData(`${api.admin}show-member-list`, 'GET', 'authToken', '/'),
@@ -49,7 +49,7 @@ const DeveloperView = () => {
   return (
     <>
       <Helmet>
-        <title>Settings | Material Kit</title>
+        <title>Developers | NZCSA</title>
       </Helmet>
       <Box
         sx={{

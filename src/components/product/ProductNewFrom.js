@@ -20,6 +20,7 @@ const ProductNewFrom = () => {
   const [eventDescription, seteventDescription] = useState('');
   const [startDate, setstartDate] = useState('');
   const [startTime, setstartTime] = useState('');
+  const [eventImgUrl, seteventImgUrl] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -39,8 +40,10 @@ const ProductNewFrom = () => {
     try {
       const time = startDate + startTime;
 
+      eventImgUrl.replace('download', 'view');
+
       const info = {
-        eventName, eventLocation, eventDescription, time, eventPrice
+        eventName, eventLocation, eventDescription, time, eventPrice, eventImgUrl
       };
 
       console.log(info);
@@ -165,6 +168,16 @@ const ProductNewFrom = () => {
                   onChange={(e) => { setstartTime(e.target.value); }}
                   variant="outlined"
                   type="time"
+                />
+                <TextField
+                  error={Boolean(touched.firstName && errors.firstName)}
+                  fullWidth
+                  helperText={touched.firstName && errors.firstName}
+                  label="Event Image URL"
+                  margin="normal"
+                  onBlur={handleBlur}
+                  onChange={(e) => { seteventImgUrl(e.target.value); }}
+                  variant="outlined"
                 />
 
                 {Boolean(touched.policy && errors.policy) && (

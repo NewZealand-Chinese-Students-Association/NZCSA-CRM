@@ -3,7 +3,7 @@ import DashboardLayout from './components/DashboardLayout';
 import MainLayout from './components/MainLayout';
 import Account from './pages/Account';
 import CustomerList from './pages/CustomerList';
-import Dashboard from './pages/Dashboard';
+// import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import ProductList from './pages/ProductList';
@@ -20,7 +20,7 @@ const routes = [
     children: [
       { path: 'account', element: <Account /> },
       { path: 'customers', element: <CustomerList /> },
-      { path: 'dashboard', element: <Dashboard /> },
+      // { path: 'dashboard', element: <Dashboard /> },
       { path: 'products', element: <ProductList /> },
       { path: 'settings', element: <Settings /> },
       { path: 'developers', element: <DeveloperView /> },
@@ -29,7 +29,7 @@ const routes = [
   },
   {
     path: '/',
-    element: !isLoggedIn ? <MainLayout /> : <Navigate to="/app/dashboard" />,
+    element: !isLoggedIn ? <MainLayout /> : <Navigate to="/app/customers" />,
     children: [
       { path: 'login', element: <Login /> },
       { path: 'register', element: <Register /> },

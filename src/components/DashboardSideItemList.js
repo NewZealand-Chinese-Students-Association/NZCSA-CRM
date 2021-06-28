@@ -1,6 +1,6 @@
 import {
   AlertCircle as AlertCircleIcon,
-  BarChart as BarChartIcon,
+  // BarChart as BarChartIcon,
   Settings as SettingsIcon,
   ShoppingBag as ShoppingBagIcon,
   User as UserIcon,
@@ -9,11 +9,11 @@ import {
 } from 'react-feather';
 
 const items = [
-  {
-    href: '/app/dashboard',
-    icon: BarChartIcon,
-    title: 'Dashboard'
-  },
+  // {
+  //   href: '/app/dashboard',
+  //   icon: BarChartIcon,
+  //   title: 'Dashboard'
+  // },
   {
     href: '/app/customers',
     icon: UsersIcon,
