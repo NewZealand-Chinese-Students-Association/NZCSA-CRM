@@ -32,20 +32,16 @@ const Login = () => {
         config
       );
 
-      // TODO: backend: login api should return isAdmin value
-
-      // console.log(data.isAdmin);
-
-      // if (!data.isAdmin) {
-      //   const errorInfo = {
-      //     response: {
-      //       data: {
-      //         error: 'You are not admin',
-      //       }
-      //     }
-      //   };
-      //   throw (errorInfo);
-      // }
+      if (!data.isAdmin) {
+        const errorInfo = {
+          response: {
+            data: {
+              error: 'You are not admin',
+            }
+          }
+        };
+        throw (errorInfo);
+      }
 
       localStorage.setItem('authToken', data.token);
 

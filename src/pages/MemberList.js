@@ -1,10 +1,10 @@
 import { Helmet } from 'react-helmet';
 import { Box, Container } from '@material-ui/core';
-import MemberListResults from 'src/components/member/MemberListResults';
-import MemberListToolbar from 'src/components/member/MemberListToolbar';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import MemberListToolbar from '../components/member/MemberListToolbar';
+import MemberListResults from '../components/member/MemberListResults';
 
 const MemberList = () => {
   const config = {
@@ -14,18 +14,20 @@ const MemberList = () => {
     }
   };
   const [members, setMembers] = useState([]);
-  const getMembers = async () => {
-    const response = await axios.get(
-      'https://nzcsa-backend.herokuapp.com/api/admin/show-member-list',
-      config
-    );
-    setMembers(response.data);
-  };
-  getMembers();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      axios.get('https://nzcsa-backend.herokuapp.com/api/admin/show-member-list', config)
+        .then((res) => {
+          setMembers(res.data);
+        });
+    };
+    fetchData();
+  }, []);
   return (
     <>
       <Helmet>
-        <title>Members | Material Kit</title>
+        <title>Members | NZCSA</title>
       </Helmet>
       <Box
         sx={{

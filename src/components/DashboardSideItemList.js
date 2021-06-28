@@ -1,9 +1,9 @@
 import {
   AlertCircle as AlertCircleIcon,
   // BarChart as BarChartIcon,
-  Settings as SettingsIcon,
+  // Settings as SettingsIcon,
   ShoppingBag as ShoppingBagIcon,
-  User as UserIcon,
+  // User as UserIcon,
   Users as UsersIcon,
   Code as CodeIcon
 } from 'react-feather';
@@ -24,16 +24,16 @@ const items = [
     icon: ShoppingBagIcon,
     title: 'Events'
   },
-  {
-    href: '/app/account',
-    icon: UserIcon,
-    title: 'Account'
-  },
-  {
-    href: '/app/settings',
-    icon: SettingsIcon,
-    title: 'Settings'
-  },
+  // {
+  //   href: '/app/account',
+  //   icon: UserIcon,
+  //   title: 'Account'
+  // },
+  // {
+  //   href: '/app/settings',
+  //   icon: SettingsIcon,
+  //   title: 'Settings'
+  // },
   {
     href: '/app/developers',
     icon: CodeIcon,

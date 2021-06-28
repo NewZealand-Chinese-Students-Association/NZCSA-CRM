@@ -25,6 +25,7 @@ import { Search as SearchIcon } from 'react-feather';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Notification from '../Notification';
 import ConfirmDialog from '../ConfirmDialog';
 
@@ -151,6 +152,7 @@ const MemberListResults = ({ members, ...rest }) => {
   };
 
   const handleDelete = async () => {
+    setLoading(true);
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -160,11 +162,12 @@ const MemberListResults = ({ members, ...rest }) => {
 
     try {
       console.log(selectedMemberIds[0]);
-      await axios.delete(`http://localhost:5000/api/admin/delete-member/${selectedMemberIds[0]}`,
+      await axios.delete(`https://nzcsa-backend.herokuapp.com/api/admin/delete-member/${selectedMemberIds[0]}`,
         config);
       window.location.href = '/app/members';
     } catch (e) {
-      console.log(e.response.data.error);
+      console.log(e.response.data);
+      setLoading(false);
       setTimeout(() => {
         setError('');
       }, 5000);
@@ -210,13 +213,18 @@ const MemberListResults = ({ members, ...rest }) => {
             justifyContent: 'flex-end'
           }}
         >
+
           <Button
             color="primary"
             disabled={deleteButton}
             variant="contained"
             onClick={handleDelete}
           >
-            Delete Members
+            {loading ? (
+              <CircularProgress color="inherit" size="2rem" />
+            ) : (
+              <>Delete User</>
+            )}
           </Button>
         </Box>
         <Box sx={{ mt: 3 }}>
