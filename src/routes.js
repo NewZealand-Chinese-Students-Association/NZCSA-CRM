@@ -2,8 +2,12 @@ import { Navigate } from 'react-router-dom';
 import DashboardLayout from './components/DashboardLayout';
 import MainLayout from './components/MainLayout';
 import Account from './pages/Account';
-import CustomerList from './pages/CustomerList';
+
 // import Dashboard from './pages/Dashboard';
+
+import MemberList from './pages/MemberList';
+import Dashboard from './pages/Dashboard';
+
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import ProductList from './pages/ProductList';
@@ -19,8 +23,8 @@ const routes = [
     element: isLoggedIn ? <DashboardLayout /> : <Navigate to="/login" />,
     children: [
       { path: 'account', element: <Account /> },
-      { path: 'customers', element: <CustomerList /> },
-      // { path: 'dashboard', element: <Dashboard /> },
+      { path: 'members', element: <MemberList /> },
+      { path: 'dashboard', element: <Dashboard /> },
       { path: 'products', element: <ProductList /> },
       { path: 'settings', element: <Settings /> },
       { path: 'developers', element: <DeveloperView /> },
@@ -29,7 +33,7 @@ const routes = [
   },
   {
     path: '/',
-    element: !isLoggedIn ? <MainLayout /> : <Navigate to="/app/customers" />,
+    element: !isLoggedIn ? <MainLayout /> : <Navigate to="/app/members" />,
     children: [
       { path: 'login', element: <Login /> },
       { path: 'register', element: <Register /> },
