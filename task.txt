@@ -21,3 +21,10 @@ Customers (change name to Members):
     - Add Customers Button (change to Add Member)
         - be able to add new member (like registration form)
         - pop up form
+
+Backend Apis:
+    member list
+    add member
+    delete member
+
+//import members from 'src/__mocks__/customers';

@@ -15,9 +15,9 @@ const items = [
   //   title: 'Dashboard'
   // },
   {
-    href: '/app/customers',
+    href: '/app/members',
     icon: UsersIcon,
-    title: 'Customers'
+    title: 'Members'
   },
   {
     href: '/app/products',

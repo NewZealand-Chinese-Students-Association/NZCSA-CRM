@@ -32,6 +32,12 @@
     "react/jsx-filename-extension": "off",
     "react/jsx-props-no-spreading": "off",
     "react/react-in-jsx-scope": "off",
-    "react/require-default-props": "off"
+    "react/require-default-props": "off",
+    "react/prop-types": "off",
+    "no-unused-vars": "off",
+    "object-curly-newline": "off",
+    "no-shadow": "off",
+    "prefer-const": "off",
+    "quote-props": "off"
   }
 }

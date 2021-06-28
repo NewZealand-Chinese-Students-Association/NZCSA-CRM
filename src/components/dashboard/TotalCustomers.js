@@ -10,7 +10,7 @@ import { green } from '@material-ui/core/colors';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import PeopleIcon from '@material-ui/icons/PeopleOutlined';
 
-const TotalCustomers = (props) => (
+const TotalMembers = (props) => (
   <Card {...props}>
     <CardContent>
       <Grid
@@ -73,4 +73,4 @@ const TotalCustomers = (props) => (
   </Card>
 );
 
-export default TotalCustomers;
+export default TotalMembers;
