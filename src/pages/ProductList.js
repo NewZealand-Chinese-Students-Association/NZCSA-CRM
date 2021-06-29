@@ -17,6 +17,7 @@ const ProductList = () => {
       fetch('https://nzcsa-backend.herokuapp.com/api/private/get-events-info')
         .then((res) => res.json()).then((data) => {
           setCardInfo(data);
+          console.log(data);
         });
     };
     fetchData();

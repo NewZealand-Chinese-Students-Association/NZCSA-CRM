@@ -58,7 +58,7 @@ const Login = () => {
   return (
     <>
       <Helmet>
-        <title>Login</title>
+        <title>Login | NZCSA</title>
       </Helmet>
       <Box
         sx={{

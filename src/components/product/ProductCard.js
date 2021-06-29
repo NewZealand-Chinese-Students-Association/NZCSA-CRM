@@ -13,10 +13,23 @@ import axios from 'axios';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useState } from 'react';
 import CardMedia from '@material-ui/core/CardMedia';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Dialog from '@material-ui/core/Dialog';
+import ProductNewFrom from './ProductNewFrom';
+import ProductShowList from './ProductShowList';
 
 const ProductCard = ({ product, ...rest }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleDelete = async () => {
     setLoading(true);
@@ -80,12 +93,6 @@ const ProductCard = ({ product, ...rest }) => {
         >
           {product.eventDescription}
         </Typography>
-        <Typography
-          color="textPrimary"
-          variant="body1"
-        >
-          {`NZD$${product.eventPrice}`}
-        </Typography>
       </CardContent>
       <Box sx={{ flexGrow: 1 }} />
       <Divider />
@@ -95,6 +102,23 @@ const ProductCard = ({ product, ...rest }) => {
           spacing={2}
           sx={{ justifyContent: 'space-between' }}
         >
+          <Grid
+            item
+            sx={{
+              alignItems: 'center',
+              display: 'flex'
+            }}
+          >
+            <AttachMoneyIcon color="action" />
+            <Typography
+              color="textSecondary"
+              display="inline"
+              sx={{ pl: 1 }}
+              variant="body1"
+            >
+              {product.eventPrice}
+            </Typography>
+          </Grid>
           <Grid
             item
             sx={{
@@ -112,6 +136,15 @@ const ProductCard = ({ product, ...rest }) => {
               {(new Date(product.startTime)).toLocaleString()}
             </Typography>
           </Grid>
+        </Grid>
+      </Box>
+      {/* <Divider /> */}
+      <Box sx={{ p: 2 }}>
+        <Grid
+          container
+          spacing={2}
+          sx={{ justifyContent: 'space-between' }}
+        >
           <Grid
             item
             sx={{
@@ -120,6 +153,36 @@ const ProductCard = ({ product, ...rest }) => {
             }}
           >
             <Button onDoubleClick={handleDelete}>
+              {loading ? (
+                <CircularProgress color="inherit" size="2rem" />
+              ) : (
+                <>Modify</>
+              )}
+            </Button>
+            <Button onClick={handleClickOpen}>
+              {loading ? (
+                <CircularProgress color="inherit" size="2rem" />
+              ) : (
+                <>Show List</>
+              )}
+            </Button>
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <ProductShowList />
+            </Dialog>
+          </Grid>
+          <Grid
+            item
+            sx={{
+              alignItems: 'center',
+              display: 'right'
+            }}
+          >
+            <Button onDoubleClick={handleDelete} color="secondary" startIcon={<DeleteIcon />}>
               {loading ? (
                 <CircularProgress color="inherit" size="2rem" />
               ) : (
