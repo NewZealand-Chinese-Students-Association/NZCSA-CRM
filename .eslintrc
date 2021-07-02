@@ -38,6 +38,7 @@
     "object-curly-newline": "off",
     "no-shadow": "off",
     "prefer-const": "off",
-    "quote-props": "off"
+    "quote-props": "off",
+    "camelcase":"off"
   }
 }
