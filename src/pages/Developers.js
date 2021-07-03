@@ -107,7 +107,7 @@ const rowsAdmin = [
     'authToken',
     '{"_id": "60c70c334441e941914988e0"}'
   ),
-  createData(`${api.admin}show-event-user-info`, 'GET', 'authToken', '/'),
+  createData(`${api.admin}show-event-user-info`, 'GET', 'authToken', '{"_id": "60c70c334441e941914988e0"}'),
   createData(`${api.admin}show-member-list`, 'GET', 'authToken', '/'),
   createData(
     `${api.admin}promo-to-member`,
