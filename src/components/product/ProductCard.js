@@ -23,40 +23,49 @@ import ProductModifyFrom from './ProductModifyForm';
 const ProductCard = ({ product, ...rest }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [openShowList, setOpenShowList] = useState(false);
-  const [openModify, setOpenModify] = useState(false);
-  const handleShowListClickOpen = () => {
-    setOpenShowList(true);
-  };
 
-  const handleShowListClose = () => {
-    setOpenShowList(false);
+  const [open, setOpen] = useState(false);
+  const [userMembers, setUserMembers] = useState([]);
+  const info = product._id;
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('authToken')}`
+    }
   };
-
-  const handleModifyClickOpen = () => {
-    setOpenModify(true);
+  const handleClickOpen = () => {
+    try {
+      axios
+        .post(
+          'http://localhost:5000/api/admin/show-event-user-info',
+          { eventId: info },
+          config
+        )
+        .then((response) => {
+          setUserMembers(response.data);
+          setOpen(true);
+        });
+    } catch (e) {
+      console.log(e.response.data.error);
+      setTimeout(() => {
+        setError('');
+      }, 5000);
+    }
   };
+  const handleClose = () => {
+    setOpen(false);
 
-  const handleModifyClose = () => {
-    setOpenModify(false);
   };
-
   const handleDelete = async () => {
     setLoading(true);
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('authToken')}`,
-      },
-    };
     setTimeout(() => {
       setLoading(false);
     }, 8000);
-
     try {
-      const info = product._id;
-      await axios.delete(`https://nzcsa-backend.herokuapp.com/api/admin/delete-events/${info}`,
-        config);
+      await axios.delete(
+        `https://nzcsa-backend.herokuapp.com/api/admin/delete-events/${info}`,
+        config
+      );
       window.location.href = '/app/products';
     } catch (e) {
       console.log(e.response.data.error);
@@ -96,22 +105,14 @@ const ProductCard = ({ product, ...rest }) => {
         >
           {product.eventLocation}
         </Typography>
-        <Typography
-          align="center"
-          color="textPrimary"
-          variant="body1"
-        >
+        <Typography align="center" color="textPrimary" variant="body1">
           {product.eventDescription}
         </Typography>
       </CardContent>
       <Box sx={{ flexGrow: 1 }} />
       <Divider />
       <Box sx={{ p: 2 }}>
-        <Grid
-          container
-          spacing={2}
-          sx={{ justifyContent: 'space-between' }}
-        >
+        <Grid container spacing={2} sx={{ justifyContent: 'space-between' }}>
           <Grid
             item
             sx={{
@@ -143,18 +144,14 @@ const ProductCard = ({ product, ...rest }) => {
               sx={{ pl: 1 }}
               variant="body2"
             >
-              {(product.startTime)}
+              {new Date(product.startTime).toLocaleString()}
             </Typography>
           </Grid>
         </Grid>
       </Box>
       {/* <Divider /> */}
       <Box sx={{ p: 2 }}>
-        <Grid
-          container
-          spacing={2}
-          sx={{ justifyContent: 'space-between' }}
-        >
+        <Grid container spacing={2} sx={{ justifyContent: 'space-between' }}>
           <Grid
             item
             sx={{
@@ -190,7 +187,7 @@ const ProductCard = ({ product, ...rest }) => {
               aria-labelledby="alert-dialog-title"
               aria-describedby="alert-dialog-description"
             >
-              <ProductShowList />
+              {!!userMembers && <ProductShowList userMembers={userMembers} />}
             </Dialog>
           </Grid>
           <Grid
@@ -200,7 +197,11 @@ const ProductCard = ({ product, ...rest }) => {
               display: 'right'
             }}
           >
-            <Button onDoubleClick={handleDelete} color="secondary" startIcon={<DeleteIcon />}>
+            <Button
+              onDoubleClick={handleDelete}
+              color="secondary"
+              startIcon={<DeleteIcon />}
+            >
               {loading ? (
                 <CircularProgress color="inherit" size="2rem" />
               ) : (
@@ -208,13 +209,9 @@ const ProductCard = ({ product, ...rest }) => {
               )}
             </Button>
             {error && (
-            <Typography
-              color="error"
-              align="center"
-              variant="button"
-            >
-              {error}
-            </Typography>
+              <Typography color="error" align="center" variant="button">
+                {error}
+              </Typography>
             )}
           </Grid>
         </Grid>

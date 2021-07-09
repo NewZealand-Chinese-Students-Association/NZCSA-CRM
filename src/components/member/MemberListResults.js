@@ -33,8 +33,16 @@ const MemberListResults = ({ members, ...rest }) => {
   const [selectedMemberIds, setSelectedMemberIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
-  const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' });
-  const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' });
+  const [notify, setNotify] = useState({
+    isOpen: false,
+    message: '',
+    type: ''
+  });
+  const [confirmDialog, setConfirmDialog] = useState({
+    isOpen: false,
+    title: '',
+    subTitle: ''
+  });
   const [deleteButton, setDeleteButton] = useState(true);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -42,15 +50,18 @@ const MemberListResults = ({ members, ...rest }) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('authToken')}`,
-      },
+        Authorization: `Bearer ${localStorage.getItem('authToken')}`
+      }
     };
 
     try {
       console.log(id);
-      await axios.post('http://localhost:5000/api/admin/promo-to-member',
-        { id },
-        config);
+      await axios.post(
+        'http://localhost:5000/api/admin/promo-to-member',
+        { userId: id },
+        config
+      );
+      window.location.reload();
     } catch (e) {
       console.log(e.response.data.error);
       setTimeout(() => {
@@ -104,9 +115,13 @@ const MemberListResults = ({ members, ...rest }) => {
     if (selectedIndex === -1) {
       newSelectedMemberIds = newSelectedMemberIds.concat(selectedMemberIds, id);
     } else if (selectedIndex === 0) {
-      newSelectedMemberIds = newSelectedMemberIds.concat(selectedMemberIds.slice(1));
+      newSelectedMemberIds = newSelectedMemberIds.concat(
+        selectedMemberIds.slice(1)
+      );
     } else if (selectedIndex === selectedMemberIds.length - 1) {
-      newSelectedMemberIds = newSelectedMemberIds.concat(selectedMemberIds.slice(0, -1));
+      newSelectedMemberIds = newSelectedMemberIds.concat(
+        selectedMemberIds.slice(0, -1)
+      );
     } else if (selectedIndex > 0) {
       newSelectedMemberIds = newSelectedMemberIds.concat(
         selectedMemberIds.slice(0, selectedIndex),
@@ -156,14 +171,16 @@ const MemberListResults = ({ members, ...rest }) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('authToken')}`,
-      },
+        Authorization: `Bearer ${localStorage.getItem('authToken')}`
+      }
     };
 
     try {
       console.log(selectedMemberIds[0]);
-      await axios.delete(`https://nzcsa-backend.herokuapp.com/api/admin/delete-member/${selectedMemberIds[0]}`,
-        config);
+      await axios.delete(
+        `https://nzcsa-backend.herokuapp.com/api/admin/delete-member/${selectedMemberIds[0]}`,
+        config
+      );
       window.location.href = '/app/members';
     } catch (e) {
       console.log(e.response.data);
@@ -213,7 +230,6 @@ const MemberListResults = ({ members, ...rest }) => {
             justifyContent: 'flex-end'
           }}
         >
-
           <Button
             color="primary"
             disabled={deleteButton}
@@ -236,10 +252,7 @@ const MemberListResults = ({ members, ...rest }) => {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <SvgIcon
-                          fontSize="small"
-                          color="action"
-                        >
+                        <SvgIcon fontSize="small" color="action">
                           <SearchIcon />
                         </SvgIcon>
                       </InputAdornment>
@@ -264,27 +277,17 @@ const MemberListResults = ({ members, ...rest }) => {
                       checked={selectedMemberIds.length === members.length}
                       color="primary"
                       indeterminate={
-                        selectedMemberIds.length > 0
-                        && selectedMemberIds.length < members.length
+                        selectedMemberIds.length > 0 &&
+                        selectedMemberIds.length < members.length
                       }
                       onChange={handleSelectAll}
                     />
                   </TableCell>
-                  <TableCell>
-                    Name
-                  </TableCell>
-                  <TableCell>
-                    Email
-                  </TableCell>
-                  <TableCell>
-                    WeChat ID
-                  </TableCell>
-                  <TableCell>
-                    Is payed
-                  </TableCell>
-                  <TableCell>
-                    Attened events
-                  </TableCell>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Email</TableCell>
+                  <TableCell>WeChat ID</TableCell>
+                  <TableCell>Is payed</TableCell>
+                  <TableCell>Attened events</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -308,35 +311,27 @@ const MemberListResults = ({ members, ...rest }) => {
                           display: 'flex'
                         }}
                       >
-                        <Typography
-                          color="textPrimary"
-                          variant="body1"
-                        >
+                        <Typography color="textPrimary" variant="body1">
                           {`${cap1(member.firstname)} ${cap1(member.lastname)}`}
                         </Typography>
                       </Box>
                     </TableCell>
-                    <TableCell>
-                      {member.email}
-                    </TableCell>
-                    <TableCell>
-                      {member.wechatid}
-                    </TableCell>
+                    <TableCell>{member.email}</TableCell>
+                    <TableCell>{member.wechatid}</TableCell>
                     <TableCell>
                       <FormControlLabel
-                        control={(
+                        control={
                           <Checkbox
                             checked={member.isMembership}
                             icon={<RadioButtonUncheckedIcon />}
                             checkedIcon={<RadioButtonCheckedIcon />}
-                            onChange={(event) => handleChecked(event, member._id)}
+                            onChange={(event) =>
+                              handleChecked(event, member._id)
+                            }
                           />
-                        )}
+                        }
                       />
-                      <Notification
-                        notify={notify}
-                        setNotify={setNotify}
-                      />
+                      <Notification notify={notify} setNotify={setNotify} />
                       <ConfirmDialog
                         confirmDialog={confirmDialog}
                         setConfirmDialog={setConfirmDialog}
@@ -344,13 +339,16 @@ const MemberListResults = ({ members, ...rest }) => {
                     </TableCell>
                     <TableCell>
                       <a
-                        style={{ color: 'blue', fontStyle: 'italic', textDecorationLine: 'underline' }}
+                        style={{
+                          color: 'blue',
+                          fontStyle: 'italic',
+                          textDecorationLine: 'underline'
+                        }}
                         onChange={(event) => handleDisplayEvents(event, member)}
                       >
                         click to view
                       </a>
                     </TableCell>
-
                   </TableRow>
                 ))}
               </TableBody>

@@ -1,10 +1,5 @@
 import { Helmet } from 'react-helmet';
-import {
-  Box,
-  Container,
-  Grid,
-  Pagination
-} from '@material-ui/core';
+import { Box, Container, Grid, Pagination } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import ProductListToolbar from '../components/product/ProductListToolbar';
 import ProductCard from '../components/product/ProductCard';
@@ -15,7 +10,8 @@ const ProductList = () => {
   useEffect(() => {
     const fetchData = async () => {
       fetch('https://nzcsa-backend.herokuapp.com/api/private/get-events-info')
-        .then((res) => res.json()).then((data) => {
+        .then((res) => res.json())
+        .then((data) => {
           setCardInfo(data);
           console.log(data);
         });
@@ -37,18 +33,9 @@ const ProductList = () => {
         <Container maxWidth={false}>
           <ProductListToolbar />
           <Box sx={{ pt: 3 }}>
-            <Grid
-              container
-              spacing={3}
-            >
+            <Grid container spacing={3}>
               {Object.entries(cardInfo).map(([key, product]) => (
-                <Grid
-                  item
-                  key={key}
-                  lg={4}
-                  md={6}
-                  xs={12}
-                >
+                <Grid item key={key} lg={4} md={6} xs={12}>
                   <ProductCard product={product} />
                 </Grid>
               ))}
@@ -61,11 +48,7 @@ const ProductList = () => {
               pt: 1
             }}
           >
-            <Pagination
-              color="primary"
-              count={3}
-              size="small"
-            />
+            <Pagination color="primary" count={3} size="small" />
           </Box>
         </Container>
       </Box>
