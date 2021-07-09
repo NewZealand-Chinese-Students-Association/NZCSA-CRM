@@ -18,10 +18,12 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Dialog from '@material-ui/core/Dialog';
 import ProductNewFrom from './ProductNewFrom';
 import ProductShowList from './ProductShowList';
+import ProductModifyFrom from './ProductModifyForm';
 
 const ProductCard = ({ product, ...rest }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
   const [open, setOpen] = useState(false);
   const [userMembers, setUserMembers] = useState([]);
   const info = product._id;
@@ -52,6 +54,7 @@ const ProductCard = ({ product, ...rest }) => {
   };
   const handleClose = () => {
     setOpen(false);
+
   };
   const handleDelete = async () => {
     setLoading(true);
@@ -156,14 +159,22 @@ const ProductCard = ({ product, ...rest }) => {
               display: 'flex'
             }}
           >
-            <Button onDoubleClick={handleDelete}>
+            <Button onClick={handleModifyClickOpen}>
               {loading ? (
                 <CircularProgress color="inherit" size="2rem" />
               ) : (
                 <>Modify</>
               )}
             </Button>
-            <Button onClick={handleClickOpen}>
+            <Dialog
+              open={openModify}
+              onClose={handleModifyClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <ProductModifyFrom card={product} />
+            </Dialog>
+            <Button onClick={handleShowListClickOpen}>
               {loading ? (
                 <CircularProgress color="inherit" size="2rem" />
               ) : (
@@ -171,8 +182,8 @@ const ProductCard = ({ product, ...rest }) => {
               )}
             </Button>
             <Dialog
-              open={open}
-              onClose={handleClose}
+              open={openShowList}
+              onClose={handleShowListClose}
               aria-labelledby="alert-dialog-title"
               aria-describedby="alert-dialog-description"
             >
