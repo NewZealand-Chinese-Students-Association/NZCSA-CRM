@@ -23,7 +23,6 @@ import ProductModifyFrom from './ProductModifyForm';
 const ProductCard = ({ product, ...rest }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-
   const [open, setOpen] = useState(false);
   const [userMembers, setUserMembers] = useState([]);
   const [openModify, setOpenModify] = useState(false);
@@ -46,7 +45,7 @@ const ProductCard = ({ product, ...rest }) => {
     try {
       axios
         .post(
-          'http://localhost:5000/api/admin/show-event-user-info',
+          'https://nzcsa-backend.herokuapp.com/api/admin/show-event-user-info',
           { eventId: info },
           config
         )
@@ -63,7 +62,6 @@ const ProductCard = ({ product, ...rest }) => {
   };
   const handleClose = () => {
     setOpen(false);
-
   };
   const handleDelete = async () => {
     setLoading(true);
@@ -183,9 +181,7 @@ const ProductCard = ({ product, ...rest }) => {
             >
               <ProductModifyFrom card={product} />
             </Dialog>
-
             <Button onClick={handleClickOpen}>
-
               {loading ? (
                 <CircularProgress color="inherit" size="2rem" />
               ) : (
@@ -193,8 +189,8 @@ const ProductCard = ({ product, ...rest }) => {
               )}
             </Button>
             <Dialog
-              open={openShowList}
-              onClose={handleShowListClose}
+              open={open}
+              onClose={handleClose}
               aria-labelledby="alert-dialog-title"
               aria-describedby="alert-dialog-description"
             >

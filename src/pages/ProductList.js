@@ -13,7 +13,6 @@ const ProductList = () => {
         .then((res) => res.json())
         .then((data) => {
           setCardInfo(data);
-          console.log(data);
         });
     };
     fetchData();

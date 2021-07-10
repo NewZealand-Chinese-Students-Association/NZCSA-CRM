@@ -57,7 +57,7 @@ const MemberListResults = ({ members, ...rest }) => {
     try {
       console.log(id);
       await axios.post(
-        'http://localhost:5000/api/admin/promo-to-member',
+        'https://nzcsa-backend.herokuapp.com/api/admin/promo-to-member',
         { userId: id },
         config
       );
