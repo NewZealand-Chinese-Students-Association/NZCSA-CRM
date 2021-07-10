@@ -18,12 +18,14 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Dialog from '@material-ui/core/Dialog';
 import ProductNewFrom from './ProductNewFrom';
 import ProductShowList from './ProductShowList';
+import ProductModifyFrom from './ProductModifyForm';
 
 const ProductCard = ({ product, ...rest }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [userMembers, setUserMembers] = useState([]);
+  const [openModify, setOpenModify] = useState(false);
   const info = product._id;
   const config = {
     headers: {
@@ -31,6 +33,14 @@ const ProductCard = ({ product, ...rest }) => {
       Authorization: `Bearer ${localStorage.getItem('authToken')}`
     }
   };
+  const handleModifyClickOpen = () => {
+    setOpenModify(true);
+  };
+
+  const handleModifyClose = () => {
+    setOpenModify(false);
+  };
+
   const handleClickOpen = () => {
     try {
       axios
@@ -156,13 +166,21 @@ const ProductCard = ({ product, ...rest }) => {
               display: 'flex'
             }}
           >
-            <Button onDoubleClick={handleDelete}>
+            <Button onClick={handleModifyClickOpen}>
               {loading ? (
                 <CircularProgress color="inherit" size="2rem" />
               ) : (
                 <>Modify</>
               )}
             </Button>
+            <Dialog
+              open={openModify}
+              onClose={handleModifyClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <ProductModifyFrom card={product} />
+            </Dialog>
             <Button onClick={handleClickOpen}>
               {loading ? (
                 <CircularProgress color="inherit" size="2rem" />
