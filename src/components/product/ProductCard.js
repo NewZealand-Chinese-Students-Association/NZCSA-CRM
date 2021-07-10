@@ -26,6 +26,7 @@ const ProductCard = ({ product, ...rest }) => {
 
   const [open, setOpen] = useState(false);
   const [userMembers, setUserMembers] = useState([]);
+  const [openModify, setOpenModify] = useState(false);
   const info = product._id;
   const config = {
     headers: {
@@ -33,6 +34,14 @@ const ProductCard = ({ product, ...rest }) => {
       Authorization: `Bearer ${localStorage.getItem('authToken')}`
     }
   };
+  const handleModifyClickOpen = () => {
+    setOpenModify(true);
+  };
+
+  const handleModifyClose = () => {
+    setOpenModify(false);
+  };
+
   const handleClickOpen = () => {
     try {
       axios
@@ -174,7 +183,9 @@ const ProductCard = ({ product, ...rest }) => {
             >
               <ProductModifyFrom card={product} />
             </Dialog>
-            <Button onClick={handleShowListClickOpen}>
+
+            <Button onClick={handleClickOpen}>
+
               {loading ? (
                 <CircularProgress color="inherit" size="2rem" />
               ) : (
