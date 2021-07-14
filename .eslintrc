@@ -38,6 +38,7 @@
     "implicit-arrow-linebreak": "off",
     "react/jsx-curly-newline": "off",
     "react/destructuring-assignment": "off",
-    "prefer-template": "off"
+    "prefer-template": "off",
+    "function-paren-newline": "off"
   }
 }
