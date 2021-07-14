@@ -63,7 +63,7 @@ const ProductCard = ({ product, ...rest }) => {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleDelete = async () => {
+  const handleArchive = async () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
@@ -205,14 +205,14 @@ const ProductCard = ({ product, ...rest }) => {
             }}
           >
             <Button
-              onDoubleClick={handleDelete}
+              onDoubleClick={handleArchive}
               color="secondary"
               startIcon={<DeleteIcon />}
             >
               {loading ? (
                 <CircularProgress color="inherit" size="2rem" />
               ) : (
-                <>Delete</>
+                <>Archive</>
               )}
             </Button>
             {error && (

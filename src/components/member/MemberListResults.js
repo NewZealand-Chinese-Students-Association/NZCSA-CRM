@@ -33,6 +33,8 @@ const MemberListResults = ({ members, ...rest }) => {
   const [selectedMemberIds, setSelectedMemberIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
+  const [searchInfo, setSearchInfo] = useState('');
+  const [membersInfo, setMembersInfo] = useState([]);
   const [notify, setNotify] = useState({
     isOpen: false,
     message: '',
@@ -67,6 +69,31 @@ const MemberListResults = ({ members, ...rest }) => {
       setTimeout(() => {
         setError('');
       }, 5000);
+    }
+  };
+  // for search function
+  useEffect(() => {
+    if (searchInfo === '') {
+      setMembersInfo(members);
+    }
+  }, [searchInfo, members]);
+  const handleSearch = () => {
+    const filterResponse = members.filter(
+      (element) =>
+        element.firstname.toLowerCase() === searchInfo ||
+        element.lastname.toLowerCase() === searchInfo ||
+        element.firstname.toLowerCase() +
+          ' ' +
+          element.lastname.toLowerCase() ===
+          searchInfo
+    );
+    setMembersInfo(filterResponse);
+    setPage(0);
+  };
+
+  const handleOnKeyDown = (event) => {
+    if (event.code === 'Enter') {
+      handleSearch();
     }
   };
 
@@ -142,7 +169,8 @@ const MemberListResults = ({ members, ...rest }) => {
   };
 
   const handleLimitChange = (event) => {
-    setLimit(event.target.value);
+    setLimit(+event.target.value);
+    setPage(0);
   };
 
   const handlePageChange = (event, newPage) => {
@@ -251,13 +279,15 @@ const MemberListResults = ({ members, ...rest }) => {
                   fullWidth
                   InputProps={{
                     startAdornment: (
-                      <InputAdornment position="start">
+                      <InputAdornment position="start" onClick={handleSearch}>
                         <SvgIcon fontSize="small" color="action">
                           <SearchIcon />
                         </SvgIcon>
                       </InputAdornment>
                     )
                   }}
+                  onChange={(e) => setSearchInfo(e.target.value.toLowerCase())}
+                  onKeyDown={handleOnKeyDown}
                   placeholder="Search member"
                   variant="outlined"
                 />
@@ -291,73 +321,81 @@ const MemberListResults = ({ members, ...rest }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {Object.values(members).map((member) => (
-                  <TableRow
-                    hover
-                    key={member._id}
-                    selected={selectedMemberIds.indexOf(member._id) !== -1}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={selectedMemberIds.indexOf(member._id) !== -1}
-                        onChange={(event) => handleSelectOne(event, member._id)}
-                        value="true"
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <Box
-                        sx={{
-                          alignItems: 'center',
-                          display: 'flex'
-                        }}
-                      >
-                        <Typography color="textPrimary" variant="body1">
-                          {`${cap1(member.firstname)} ${cap1(member.lastname)}`}
-                        </Typography>
-                      </Box>
-                    </TableCell>
-                    <TableCell>{member.email}</TableCell>
-                    <TableCell>{member.wechatid}</TableCell>
-                    <TableCell>
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            checked={member.isMembership}
-                            icon={<RadioButtonUncheckedIcon />}
-                            checkedIcon={<RadioButtonCheckedIcon />}
-                            onChange={(event) =>
-                              handleChecked(event, member._id)
-                            }
-                          />
-                        }
-                      />
-                      <Notification notify={notify} setNotify={setNotify} />
-                      <ConfirmDialog
-                        confirmDialog={confirmDialog}
-                        setConfirmDialog={setConfirmDialog}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <a
-                        style={{
-                          color: 'blue',
-                          fontStyle: 'italic',
-                          textDecorationLine: 'underline'
-                        }}
-                        onChange={(event) => handleDisplayEvents(event, member)}
-                      >
-                        click to view
-                      </a>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {membersInfo
+                  .slice(page * limit, page * limit + limit)
+                  .map((member) => (
+                    <TableRow
+                      hover
+                      key={member._id}
+                      selected={selectedMemberIds.indexOf(member._id) !== -1}
+                    >
+                      <TableCell padding="checkbox">
+                        <Checkbox
+                          checked={selectedMemberIds.indexOf(member._id) !== -1}
+                          onChange={(event) =>
+                            handleSelectOne(event, member._id)
+                          }
+                          value="true"
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <Box
+                          sx={{
+                            alignItems: 'center',
+                            display: 'flex'
+                          }}
+                        >
+                          <Typography color="textPrimary" variant="body1">
+                            {`${cap1(member.firstname)} ${cap1(
+                              member.lastname
+                            )}`}
+                          </Typography>
+                        </Box>
+                      </TableCell>
+                      <TableCell>{member.email}</TableCell>
+                      <TableCell>{member.wechatid}</TableCell>
+                      <TableCell>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={member.isMembership}
+                              icon={<RadioButtonUncheckedIcon />}
+                              checkedIcon={<RadioButtonCheckedIcon />}
+                              onChange={(event) =>
+                                handleChecked(event, member._id)
+                              }
+                            />
+                          }
+                        />
+                        <Notification notify={notify} setNotify={setNotify} />
+                        <ConfirmDialog
+                          confirmDialog={confirmDialog}
+                          setConfirmDialog={setConfirmDialog}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <a
+                          style={{
+                            color: 'blue',
+                            fontStyle: 'italic',
+                            textDecorationLine: 'underline'
+                          }}
+                          onChange={(event) =>
+                            handleDisplayEvents(event, member)
+                          }
+                        >
+                          click to view
+                        </a>
+                      </TableCell>
+                    </TableRow>
+                  ))}
               </TableBody>
             </Table>
           </Box>
         </PerfectScrollbar>
         <TablePagination
           component="div"
-          count={members.length}
+          count={membersInfo.length}
           onPageChange={handlePageChange}
           onRowsPerPageChange={handleLimitChange}
           page={page}

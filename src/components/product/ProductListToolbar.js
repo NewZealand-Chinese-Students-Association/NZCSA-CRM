@@ -12,8 +12,9 @@ import Dialog from '@material-ui/core/Dialog';
 import { useState } from 'react';
 import ProductNewFrom from './ProductNewFrom';
 
-const ProductListToolbar = (props) => {
+const ProductListToolbar = ({ props, handleSearch }) => {
   const [open, setOpen] = useState(false);
+  const [searchInfo, setSearchInfo] = useState('');
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -21,6 +22,11 @@ const ProductListToolbar = (props) => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+  const handleOnKeyDown = (event) => {
+    if (event.code === 'Enter') {
+      handleSearch(searchInfo);
+    }
   };
   return (
     <Box {...props}>
@@ -30,11 +36,7 @@ const ProductListToolbar = (props) => {
           justifyContent: 'flex-end'
         }}
       >
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={handleClickOpen}
-        >
+        <Button color="primary" variant="contained" onClick={handleClickOpen}>
           Add Event
         </Button>
         <Dialog
@@ -54,16 +56,20 @@ const ProductListToolbar = (props) => {
                 fullWidth
                 InputProps={{
                   startAdornment: (
-                    <InputAdornment position="start">
-                      <SvgIcon
-                        fontSize="small"
-                        color="action"
-                      >
+                    <InputAdornment
+                      position="start"
+                      onClick={() => handleSearch(searchInfo)}
+                    >
+                      <SvgIcon fontSize="small" color="action">
                         <SearchIcon />
                       </SvgIcon>
                     </InputAdornment>
                   )
                 }}
+                onChange={(e) => {
+                  setSearchInfo(e.target.value.toLowerCase());
+                }}
+                onKeyDown={handleOnKeyDown}
                 placeholder="Search product"
                 variant="outlined"
               />

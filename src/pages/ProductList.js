@@ -6,17 +6,36 @@ import ProductCard from '../components/product/ProductCard';
 
 const ProductList = () => {
   const [cardInfo, setCardInfo] = useState([]);
+  const [cards, setCards] = useState([]);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
       fetch('https://nzcsa-backend.herokuapp.com/api/private/get-events-info')
         .then((res) => res.json())
         .then((data) => {
-          setCardInfo(data);
+          const products = [];
+          Object.entries(data).map(([key, product]) => products.push(product));
+          setCardInfo(products);
         });
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (search === '') {
+      setCards(cardInfo);
+    }
+  }, [search, cardInfo]);
+
+  function handleSearch(searchInfo) {
+    setSearch(searchInfo);
+    setCards(
+      cardInfo.filter((element) =>
+        element.eventName.toLowerCase().includes(searchInfo)
+      )
+    );
+  }
   return (
     <>
       <Helmet>
@@ -30,11 +49,11 @@ const ProductList = () => {
         }}
       >
         <Container maxWidth={false}>
-          <ProductListToolbar />
+          <ProductListToolbar handleSearch={handleSearch} />
           <Box sx={{ pt: 3 }}>
             <Grid container spacing={3}>
-              {Object.entries(cardInfo).map(([key, product]) => (
-                <Grid item key={key} lg={4} md={6} xs={12}>
+              {cards.map((product) => (
+                <Grid key={product._id} item lg={4} md={6} xs={12}>
                   <ProductCard product={product} />
                 </Grid>
               ))}
