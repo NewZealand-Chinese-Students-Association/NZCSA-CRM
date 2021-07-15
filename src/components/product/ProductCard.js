@@ -44,9 +44,8 @@ const ProductCard = ({ product, ...rest }) => {
   const handleClickOpen = () => {
     try {
       axios
-        .post(
-          'https://nzcsa-backend.herokuapp.com/api/admin/show-event-user-info',
-          { eventId: info },
+        .get(
+          `http://localhost:5000/api/admin/show-event-user-info/${info}`,
           config
         )
         .then((response) => {
@@ -54,7 +53,7 @@ const ProductCard = ({ product, ...rest }) => {
           setOpen(true);
         });
     } catch (e) {
-      console.log(e.response.data.error);
+      console.log(e.response);
       setTimeout(() => {
         setError('');
       }, 5000);
