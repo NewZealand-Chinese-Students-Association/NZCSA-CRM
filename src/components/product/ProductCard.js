@@ -6,7 +6,8 @@ import {
   CardContent,
   Divider,
   Grid,
-  Typography
+  Typography,
+  makeStyles
 } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import axios from 'axios';
@@ -20,7 +21,14 @@ import ProductNewFrom from './ProductNewFrom';
 import ProductShowList from './ProductShowList';
 import ProductModifyFrom from './ProductModifyForm';
 
+const useStyles = makeStyles((theme) => ({
+  isArchiveButton: {
+    cursor: 'not-allowed'
+  }
+}));
+
 const ProductCard = ({ product, ...rest }) => {
+  const classes = useStyles();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [showListLoading, setShowListLoading] = useState(false);
@@ -76,6 +84,11 @@ const ProductCard = ({ product, ...rest }) => {
         `https://nzcsa-backend.herokuapp.com/api/admin/delete-events/${info}`,
         config
       );
+      // await axios.delete(
+      //   `http://localhost:5000/api/admin/delete-events/${info}`,
+      //   config
+      // );
+      // console.log(info);
       window.location.href = '/app/products';
     } catch (e) {
       console.log(e.response.data.error);
@@ -205,17 +218,29 @@ const ProductCard = ({ product, ...rest }) => {
               display: 'right'
             }}
           >
-            <Button
-              onDoubleClick={handleArchive}
-              color="secondary"
-              startIcon={<DeleteIcon />}
-            >
-              {loading ? (
-                <CircularProgress color="inherit" size="2rem" />
-              ) : (
-                <>Archive</>
-              )}
-            </Button>
+            {!!product && product.isActive ? (
+              <Button
+                onClick={handleArchive}
+                color="secondary"
+                startIcon={<DeleteIcon />}
+              >
+                {loading ? (
+                  <CircularProgress color="inherit" size="2rem" />
+                ) : (
+                  <>Archive</>
+                )}
+              </Button>
+            ) : (
+              <Button
+                color="secondary"
+                className={classes.isArchiveButton}
+                // startIcon={<DeleteIcon />}
+              >
+                <div className={classes.isArchiveButton}>
+                  is already Archive
+                </div>
+              </Button>
+            )}
             {error && (
               <Typography color="error" align="center" variant="button">
                 {error}
