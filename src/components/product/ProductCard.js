@@ -23,6 +23,7 @@ import ProductModifyFrom from './ProductModifyForm';
 const ProductCard = ({ product, ...rest }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showListLoading, setShowListLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [userMembers, setUserMembers] = useState([]);
   const [openModify, setOpenModify] = useState(false);
@@ -42,17 +43,20 @@ const ProductCard = ({ product, ...rest }) => {
   };
 
   const handleClickOpen = () => {
+    setShowListLoading(true);
     try {
       axios
         .get(
-          `http://localhost:5000/api/admin/show-event-user-info/${info}`,
+          `https://nzcsa-backend.herokuapp.com/api/admin/show-event-user-info/${info}`,
           config
         )
         .then((response) => {
+          setShowListLoading(false);
           setUserMembers(response.data);
           setOpen(true);
         });
     } catch (e) {
+      setShowListLoading(false);
       console.log(e.response);
       setTimeout(() => {
         setError('');
@@ -166,11 +170,9 @@ const ProductCard = ({ product, ...rest }) => {
             }}
           >
             <Button onClick={handleModifyClickOpen}>
-              {loading ? (
-                <CircularProgress color="inherit" size="2rem" />
-              ) : (
-                <>Modify</>
-              )}
+
+              <>Modify</>
+
             </Button>
             <Dialog
               open={openModify}
@@ -181,7 +183,7 @@ const ProductCard = ({ product, ...rest }) => {
               <ProductModifyFrom card={product} />
             </Dialog>
             <Button onClick={handleClickOpen}>
-              {loading ? (
+              {showListLoading ? (
                 <CircularProgress color="inherit" size="2rem" />
               ) : (
                 <>Show List</>
