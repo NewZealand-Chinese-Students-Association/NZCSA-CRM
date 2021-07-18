@@ -17,12 +17,15 @@ const ProductModifyFrom = ({ card }) => {
   const [eventName, seteventName] = useState(card.eventName);
   const [eventLocation, seteventLocation] = useState(card.eventLocation);
   const [eventPrice, seteventPrice] = useState(card.eventPrice);
-  const [eventDescription, seteventDescription] = useState(card.eventDescription);
+  const [eventDescription, seteventDescription] = useState(
+    card.eventDescription
+  );
   const [startDate, setstartDate] = useState('');
   const [startTime, setstartTime] = useState('');
   const [eventImgUrl, seteventImgUrl] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [wechatImgUrl, setwechatImgUrl] = useState('');
 
   const handleSubmit = async (f) => {
     f.preventDefault();
@@ -30,8 +33,8 @@ const ProductModifyFrom = ({ card }) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('authToken')}`,
-      },
+        Authorization: `Bearer ${localStorage.getItem('authToken')}`
+      }
     };
     setTimeout(() => {
       setLoading(false);
@@ -45,13 +48,22 @@ const ProductModifyFrom = ({ card }) => {
       eventImgUrl.replace('download', 'view');
 
       const info = {
-        eventId, eventName, eventLocation, eventDescription, time, eventPrice, eventImgUrl
+        eventId,
+        eventName,
+        eventLocation,
+        eventDescription,
+        time,
+        eventPrice,
+        eventImgUrl,
+        wechatImgUrl
       };
 
       //   console.log(info);
-      await axios.post('https://nzcsa-backend.herokuapp.com/api/admin/modify-events',
+      await axios.post(
+        'https://nzcsa-backend.herokuapp.com/api/admin/modify-events',
         info,
-        config);
+        config
+      );
       window.location.href = '/app/products';
     } catch (e) {
       setError(e.response.data.error);
@@ -80,28 +92,16 @@ const ProductModifyFrom = ({ card }) => {
               navigate('/app/dashboard', { replace: true });
             }}
           >
-            {({
-              errors,
-              handleBlur,
-              isSubmitting,
-              touched,
-            }) => (
+            {({ errors, handleBlur, isSubmitting, touched }) => (
               <form onSubmit={handleSubmit}>
                 <Box sx={{ mb: 3 }}>
-                  <Typography
-                    color="textPrimary"
-                    variant="h2"
-                  >
+                  <Typography color="textPrimary" variant="h2">
                     Modify Event
                   </Typography>
                   {error && (
-                  <Typography
-                    color="error"
-                    align="center"
-                    variant="button"
-                  >
-                    {error}
-                  </Typography>
+                    <Typography color="error" align="center" variant="button">
+                      {error}
+                    </Typography>
                   )}
                 </Box>
                 <TextField
@@ -111,7 +111,9 @@ const ProductModifyFrom = ({ card }) => {
                   margin="normal"
                   name="firstName"
                   onBlur={handleBlur}
-                  onChange={(e) => { seteventName(e.target.value); }}
+                  onChange={(e) => {
+                    seteventName(e.target.value);
+                  }}
                   variant="outlined"
                   defaultValue={card.eventName}
                 />
@@ -123,7 +125,9 @@ const ProductModifyFrom = ({ card }) => {
                   margin="normal"
                   name="lastName"
                   onBlur={handleBlur}
-                  onChange={(e) => { seteventDescription(e.target.value); }}
+                  onChange={(e) => {
+                    seteventDescription(e.target.value);
+                  }}
                   variant="outlined"
                   defaultValue={card.eventDescription}
                 />
@@ -135,7 +139,9 @@ const ProductModifyFrom = ({ card }) => {
                   margin="normal"
                   name="email"
                   onBlur={handleBlur}
-                  onChange={(e) => { seteventLocation(e.target.value); }}
+                  onChange={(e) => {
+                    seteventLocation(e.target.value);
+                  }}
                   variant="outlined"
                   defaultValue={card.eventLocation}
                 />
@@ -146,7 +152,9 @@ const ProductModifyFrom = ({ card }) => {
                   margin="normal"
                   name="firstName"
                   onBlur={handleBlur}
-                  onChange={(e) => { seteventPrice(e.target.value); }}
+                  onChange={(e) => {
+                    seteventPrice(e.target.value);
+                  }}
                   variant="outlined"
                   defaultValue={card.eventPrice}
                 />
@@ -158,7 +166,9 @@ const ProductModifyFrom = ({ card }) => {
                   helperText={touched.password && errors.password}
                   margin="normal"
                   name="password"
-                  onChange={(e) => { setstartDate(e.target.value); }}
+                  onChange={(e) => {
+                    setstartDate(e.target.value);
+                  }}
                   type="date"
                 />
                 <TextField
@@ -169,7 +179,9 @@ const ProductModifyFrom = ({ card }) => {
                   margin="normal"
                   name="password"
                   onBlur={handleBlur}
-                  onChange={(e) => { setstartTime(e.target.value); }}
+                  onChange={(e) => {
+                    setstartTime(e.target.value);
+                  }}
                   variant="outlined"
                   type="time"
                 />
@@ -179,14 +191,26 @@ const ProductModifyFrom = ({ card }) => {
                   label="Event Image URL"
                   margin="normal"
                   onBlur={handleBlur}
-                  onChange={(e) => { seteventImgUrl(e.target.value); }}
+                  onChange={(e) => {
+                    seteventImgUrl(e.target.value);
+                  }}
+                  variant="outlined"
+                />
+                <TextField
+                  error={Boolean(touched.firstName && errors.firstName)}
+                  fullWidth
+                  helperText={touched.firstName && errors.firstName}
+                  label="Wechat Group QRCode Image URL"
+                  margin="normal"
+                  onBlur={handleBlur}
+                  onChange={(e) => {
+                    setwechatImgUrl(e.target.value);
+                  }}
                   variant="outlined"
                 />
 
                 {Boolean(touched.policy && errors.policy) && (
-                  <FormHelperText error>
-                    {errors.policy}
-                  </FormHelperText>
+                  <FormHelperText error>{errors.policy}</FormHelperText>
                 )}
                 <Box sx={{ py: 2 }}>
                   <Button
