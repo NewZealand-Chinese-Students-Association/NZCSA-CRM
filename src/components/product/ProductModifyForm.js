@@ -195,6 +195,7 @@ const ProductModifyFrom = ({ card }) => {
                     seteventImgUrl(e.target.value);
                   }}
                   variant="outlined"
+                  defaultValue={card.eventImgUrl}
                 />
                 <TextField
                   error={Boolean(touched.firstName && errors.firstName)}
@@ -207,6 +208,7 @@ const ProductModifyFrom = ({ card }) => {
                     setwechatImgUrl(e.target.value);
                   }}
                   variant="outlined"
+                  defaultValue={card.wechatImgUrl}
                 />
 
                 {Boolean(touched.policy && errors.policy) && (
