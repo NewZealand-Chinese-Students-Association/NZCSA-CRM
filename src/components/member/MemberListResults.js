@@ -83,9 +83,9 @@ const MemberListResults = ({ members, ...rest }) => {
         element.firstname.toLowerCase() === searchInfo ||
         element.lastname.toLowerCase() === searchInfo ||
         element.firstname.toLowerCase() +
-          ' ' +
-          element.lastname.toLowerCase() ===
-          searchInfo
+        ' ' +
+        element.lastname.toLowerCase() ===
+        searchInfo
     );
     setMembersInfo(filterResponse);
     setPage(0);
@@ -319,7 +319,7 @@ const MemberListResults = ({ members, ...rest }) => {
                   <TableCell>Phone</TableCell>
                   <TableCell>University</TableCell>
                   <TableCell>Faculty</TableCell>
-                  <TableCell>Is payed</TableCell>
+                  <TableCell>Membership</TableCell>
                   <TableCell>Attened events</TableCell>
                 </TableRow>
               </TableHead>
@@ -380,18 +380,14 @@ const MemberListResults = ({ members, ...rest }) => {
                         />
                       </TableCell>
                       <TableCell>
-                        <a
-                          style={{
-                            color: 'blue',
-                            fontStyle: 'italic',
-                            textDecorationLine: 'underline'
-                          }}
+                        <Button
+                          variant="outlined"
                           onChange={(event) =>
                             handleDisplayEvents(event, member)
                           }
                         >
-                          click to view
-                        </a>
+                          View
+                        </Button>
                       </TableCell>
                     </TableRow>
                   ))}

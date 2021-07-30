@@ -2,9 +2,11 @@ import { Helmet } from 'react-helmet';
 import { Box, Container } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import MemberListResults from '../components/member/MemberListResults';
 
 const MemberList = () => {
+  const [loading, setLoading] = useState(false);
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -15,8 +17,10 @@ const MemberList = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       axios.get('https://nzcsa-backend.herokuapp.com/api/admin/show-member-list', config)
         .then((res) => {
+          setLoading(false);
           setMembers((res.data).reverse());
         });
     };
@@ -36,7 +40,12 @@ const MemberList = () => {
       >
         <Container maxWidth={false}>
           <Box sx={{ pt: 3 }}>
-            <MemberListResults members={members} />
+            {loading ? (
+              <CircularProgress color="inherit" size="2rem" />
+            ) : (
+              <MemberListResults members={members} />
+            )}
+
           </Box>
         </Container>
       </Box>
