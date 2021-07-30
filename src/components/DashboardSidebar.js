@@ -92,7 +92,29 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           ))}
         </List>
       </Box>
-
+      <Box sx={{ flexGrow: 1 }} />
+      <Box
+        sx={{
+          backgroundColor: 'background.default',
+          m: 2,
+          p: 2
+        }}
+      >
+        <Typography
+          align="center"
+          gutterBottom
+          variant="h4"
+        >
+          Report Bugs
+        </Typography>
+        <Typography
+          align="center"
+          variant="body2"
+          href="https://meloguan.info"
+        >
+          Contact Melo Guan
+        </Typography>
+      </Box>
     </Box>
   );
 

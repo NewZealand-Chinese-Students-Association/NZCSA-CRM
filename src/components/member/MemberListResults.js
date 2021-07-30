@@ -315,7 +315,10 @@ const MemberListResults = ({ members, ...rest }) => {
                   </TableCell>
                   <TableCell>Name</TableCell>
                   <TableCell>Email</TableCell>
-                  <TableCell>WeChat ID</TableCell>
+                  <TableCell>Gender</TableCell>
+                  <TableCell>Phone</TableCell>
+                  <TableCell>University</TableCell>
+                  <TableCell>Faculty</TableCell>
                   <TableCell>Is payed</TableCell>
                   <TableCell>Attened events</TableCell>
                 </TableRow>
@@ -353,7 +356,10 @@ const MemberListResults = ({ members, ...rest }) => {
                         </Box>
                       </TableCell>
                       <TableCell>{member.email}</TableCell>
-                      <TableCell>{member.wechatid}</TableCell>
+                      <TableCell>{member.gender}</TableCell>
+                      <TableCell>{member.phone}</TableCell>
+                      <TableCell>{member.university}</TableCell>
+                      <TableCell>{member.faculty}</TableCell>
                       <TableCell>
                         <FormControlLabel
                           control={

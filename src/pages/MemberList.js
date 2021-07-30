@@ -2,8 +2,6 @@ import { Helmet } from 'react-helmet';
 import { Box, Container } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import PropTypes from 'prop-types';
-import MemberListToolbar from '../components/member/MemberListToolbar';
 import MemberListResults from '../components/member/MemberListResults';
 
 const MemberList = () => {
@@ -19,7 +17,7 @@ const MemberList = () => {
     const fetchData = async () => {
       axios.get('https://nzcsa-backend.herokuapp.com/api/admin/show-member-list', config)
         .then((res) => {
-          setMembers(res.data);
+          setMembers((res.data).reverse());
         });
     };
     fetchData();

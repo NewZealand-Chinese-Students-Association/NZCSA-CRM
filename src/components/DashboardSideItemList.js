@@ -1,6 +1,6 @@
 import {
   AlertCircle as AlertCircleIcon,
-  // BarChart as BarChartIcon,
+  BarChart as BarChartIcon,
   // Settings as SettingsIcon,
   ShoppingBag as ShoppingBagIcon,
   // User as UserIcon,
@@ -20,15 +20,15 @@ const items = [
     title: 'Members'
   },
   {
-    href: '/app/products',
+    href: '/app/event-now',
     icon: ShoppingBagIcon,
-    title: 'Events'
+    title: 'Current Events'
   },
-  // {
-  //   href: '/app/account',
-  //   icon: UserIcon,
-  //   title: 'Account'
-  // },
+  {
+    href: '/app/event-past',
+    icon: BarChartIcon,
+    title: 'Archived Events'
+  },
   // {
   //   href: '/app/settings',
   //   icon: SettingsIcon,

@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet';
 import { Box, Container, Grid, Pagination } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import ProductListToolbar from '../components/product/ProductListToolbar';
-import ProductCard from '../components/product/ProductCard';
+import PastEventCard from '../components/product/PastEventCard';
 
 const ProductList = () => {
   const [cardInfo, setCardInfo] = useState([]);
@@ -16,7 +16,7 @@ const ProductList = () => {
         .then((data) => {
           const products = [];
           Object.entries(data).map(([key, product]) => {
-            if (product.isActive) {
+            if (!product.isActive) {
               products.push(product);
             }
             return 0;
@@ -59,7 +59,7 @@ const ProductList = () => {
             <Grid container spacing={3}>
               {cards.map((product) => (
                 <Grid key={product._id} item lg={4} md={6} xs={12}>
-                  <ProductCard product={product} />
+                  <PastEventCard product={product} />
                 </Grid>
               ))}
             </Grid>

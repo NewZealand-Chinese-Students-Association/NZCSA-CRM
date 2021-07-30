@@ -39,6 +39,7 @@
     "react/jsx-curly-newline": "off",
     "react/destructuring-assignment": "off",
     "prefer-template": "off",
-    "function-paren-newline": "off"
+    "function-paren-newline": "off",
+    "eqeqeq": "off"
   }
 }

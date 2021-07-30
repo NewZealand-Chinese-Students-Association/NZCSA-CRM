@@ -11,6 +11,7 @@ import ProductList from './pages/ProductList';
 import Settings from './pages/Settings';
 import Register from './pages/Register';
 import DeveloperView from './pages/Developers';
+import PastEvent from './pages/PastEvent';
 
 const isLoggedIn = localStorage.getItem('authToken');
 
@@ -22,8 +23,8 @@ const routes = [
       // { path: 'account', element: <Account /> },
       { path: 'members', element: <MemberList /> },
       // { path: 'dashboard', element: <Dashboard /> },
-      { path: 'products', element: <ProductList /> },
-      // { path: 'settings', element: <Settings /> },
+      { path: 'event-now', element: <ProductList /> },
+      { path: 'event-past', element: <PastEvent /> },
       { path: 'developers', element: <DeveloperView /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
