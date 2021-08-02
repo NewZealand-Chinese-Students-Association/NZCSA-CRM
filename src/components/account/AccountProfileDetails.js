@@ -13,26 +13,26 @@ import {
 const states = [
   {
     value: 'alabama',
-    label: 'Alabama'
+    label: 'IT'
   },
   {
     value: 'new-york',
-    label: 'New York'
+    label: 'BD'
   },
   {
     value: 'san-francisco',
-    label: 'San Francisco'
+    label: 'MK'
   }
 ];
 
 const AccountProfileDetails = (props) => {
   const [values, setValues] = useState({
-    firstName: 'Katarina',
-    lastName: 'Smith',
-    email: 'demo@devias.io',
+    // firstName: 'x',
+    // lastName: 'x',
+    // email: 'demo@devias.io',
     phone: '',
-    state: 'Alabama',
-    country: 'USA'
+    // state: 'Alabama',
+    // country: 'USA'
   });
 
   const handleChange = (event) => {
@@ -50,8 +50,8 @@ const AccountProfileDetails = (props) => {
     >
       <Card>
         <CardHeader
-          subheader="The information can be edited"
-          title="Profile"
+          subheader="date"
+          title="Check in form"
         />
         <Divider />
         <CardContent>
@@ -66,8 +66,8 @@ const AccountProfileDetails = (props) => {
             >
               <TextField
                 fullWidth
-                helperText="Please specify the first name"
-                label="First name"
+                // helperText="Please specify the first name"
+                label="Name"
                 name="firstName"
                 onChange={handleChange}
                 required
@@ -82,67 +82,7 @@ const AccountProfileDetails = (props) => {
             >
               <TextField
                 fullWidth
-                label="Last name"
-                name="lastName"
-                onChange={handleChange}
-                required
-                value={values.lastName}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Email Address"
-                name="email"
-                onChange={handleChange}
-                required
-                value={values.email}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Phone Number"
-                name="phone"
-                onChange={handleChange}
-                type="number"
-                value={values.phone}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Country"
-                name="country"
-                onChange={handleChange}
-                required
-                value={values.country}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Select State"
+                label="Department"
                 name="state"
                 onChange={handleChange}
                 required
@@ -161,6 +101,67 @@ const AccountProfileDetails = (props) => {
                 ))}
               </TextField>
             </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                label="Question"
+                name="email"
+                onChange={handleChange}
+                required
+                value={values.email}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                label="Question"
+                name="phone"
+                onChange={handleChange}
+                type="number"
+                value={values.phone}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                label="Question"
+                name="country"
+                onChange={handleChange}
+                required
+                value={values.country}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                // helperText="Please specify the first name"
+                label="Question"
+                name="firstName"
+                onChange={handleChange}
+                required
+                value={values.firstName}
+                variant="outlined"
+              />
+            </Grid>
           </Grid>
         </CardContent>
         <Divider />
@@ -175,7 +176,7 @@ const AccountProfileDetails = (props) => {
             color="primary"
             variant="contained"
           >
-            Save details
+            Submit
           </Button>
         </Box>
       </Card>

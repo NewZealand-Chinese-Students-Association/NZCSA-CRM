@@ -12,6 +12,8 @@ import Settings from './pages/Settings';
 import Register from './pages/Register';
 import DeveloperView from './pages/Developers';
 import PastEvent from './pages/PastEvent';
+import Checkin from './pages/Checkin';
+import Dashboard from './pages/Dashboard';
 
 const isLoggedIn = localStorage.getItem('authToken');
 
@@ -25,6 +27,7 @@ const routes = [
       // { path: 'dashboard', element: <Dashboard /> },
       { path: 'event-now', element: <ProductList /> },
       { path: 'event-past', element: <PastEvent /> },
+      { path: 'check-in', element: <Checkin /> },
       { path: 'developers', element: <DeveloperView /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]

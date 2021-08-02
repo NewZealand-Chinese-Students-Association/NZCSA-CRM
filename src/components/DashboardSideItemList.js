@@ -5,7 +5,8 @@ import {
   ShoppingBag as ShoppingBagIcon,
   // User as UserIcon,
   Users as UsersIcon,
-  Code as CodeIcon
+  Code as CodeIcon,
+  CheckCircle as CheckIcon
 } from 'react-feather';
 
 const items = [
@@ -28,6 +29,11 @@ const items = [
     href: '/app/event-past',
     icon: BarChartIcon,
     title: 'Archived Events'
+  },
+  {
+    href: '/app/check-in',
+    icon: CheckIcon,
+    title: 'Check-in'
   },
   // {
   //   href: '/app/settings',

@@ -40,6 +40,7 @@
     "react/destructuring-assignment": "off",
     "prefer-template": "off",
     "function-paren-newline": "off",
-    "eqeqeq": "off"
+    "eqeqeq": "off",
+    "linebreak-style": "off"
   }
 }

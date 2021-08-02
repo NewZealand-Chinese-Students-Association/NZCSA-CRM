@@ -110,7 +110,6 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
         <Typography
           align="center"
           variant="body2"
-          href="https://meloguan.info"
         >
           Contact Melo Guan
         </Typography>
