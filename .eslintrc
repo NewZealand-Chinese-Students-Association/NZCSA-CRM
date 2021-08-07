@@ -41,6 +41,7 @@
     "prefer-template": "off",
     "function-paren-newline": "off",
     "eqeqeq": "off",
-    "linebreak-style": "off"
+    "linebreak-style": "off",
+    "new-cap": "off"
   }
 }
