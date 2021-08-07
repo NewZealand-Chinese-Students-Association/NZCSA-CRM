@@ -6,7 +6,8 @@ import {
   // User as UserIcon,
   Users as UsersIcon,
   Code as CodeIcon,
-  CheckCircle as CheckIcon
+  CheckCircle as CheckIcon,
+  Book as BookIcon
 } from 'react-feather';
 
 const items = [
@@ -44,6 +45,11 @@ const items = [
     href: '/app/developers',
     icon: CodeIcon,
     title: 'Developers'
+  },
+  {
+    href: '/app/log',
+    icon: BookIcon,
+    title: 'Log'
   },
   {
     href: '/404',

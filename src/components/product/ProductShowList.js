@@ -10,8 +10,9 @@ import Paper from '@material-ui/core/Paper';
 import TablePagination from '@material-ui/core/TablePagination';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
-import { IconButton } from '@material-ui/core';
+import { Button, Grid, IconButton } from '@material-ui/core';
 import { element } from 'prop-types';
+import PDF from './PDF';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -33,7 +34,8 @@ const StyledTableRow = withStyles((theme) => ({
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    padding: 10
   },
   table: {
     width: '100%',
@@ -47,7 +49,9 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: alpha(theme.palette.common.black, 0.13)
     },
     margin: 3,
-    width: '40%'
+  },
+  button: {
+    width: '100%'
   },
   searchIcon: {
     padding: theme.spacing(0, 2),
@@ -108,19 +112,26 @@ export default function ProductShowList(userMembers) {
 
   return (
     <div className={classes.root}>
-      <div className={classes.search}>
-        <div className={classes.searchIcon}>
-          <SearchIcon />
-        </div>
-        <InputBase
-          id="searchInput"
-          placeholder="Search Name"
-          inputProps={{ 'aria-label': 'search' }}
-          className={classes.inputBase}
-          onChange={(e) => setSearchInfo(e.target.value.toLowerCase())}
-          onKeyDown={handleOnKeyDown}
-        />
-      </div>
+      <Grid container spacing={3}>
+        <Grid item xs={6}>
+          <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              id="searchInput"
+              placeholder="Search Name"
+              inputProps={{ 'aria-label': 'search' }}
+              className={classes.inputBase}
+              onChange={(e) => setSearchInfo(e.target.value.toLowerCase())}
+              onKeyDown={handleOnKeyDown}
+            />
+          </div>
+        </Grid>
+        <Grid item xs={6}>
+          <Button fullWidth variant="contained" onClick={() => PDF(users)}>Generate PDF</Button>
+        </Grid>
+      </Grid>
 
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="customized table">
@@ -129,7 +140,7 @@ export default function ProductShowList(userMembers) {
               {/* <StyledTableCell>Dessert (100g serving)</StyledTableCell> */}
               <StyledTableCell align="right">Name</StyledTableCell>
               <StyledTableCell align="right">Email</StyledTableCell>
-              <StyledTableCell align="right">Wechat ID</StyledTableCell>
+              <StyledTableCell align="right">Gender</StyledTableCell>
               {/* <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell> */}
             </TableRow>
           </TableHead>
@@ -146,7 +157,7 @@ export default function ProductShowList(userMembers) {
                       {row.firstname + ' ' + row.lastname}
                     </StyledTableCell>
                     <StyledTableCell align="right">{row.email}</StyledTableCell>
-                    <StyledTableCell align="right">null</StyledTableCell>
+                    <StyledTableCell align="right">{row.gender}</StyledTableCell>
                     {/* <StyledTableCell align="right">{row.protein}</StyledTableCell> */}
                   </StyledTableRow>
                 ))}
