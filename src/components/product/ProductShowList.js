@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       backgroundColor: alpha(theme.palette.common.black, 0.13)
     },
-    margin: 3,
+    margin: 3
   },
   button: {
     width: '100%'
@@ -91,15 +91,17 @@ export default function ProductShowList(userMembers) {
     setPage(0);
   };
 
+  // element.firstname.toLowerCase() === searchInfo ||
+  //       element.lastname.toLowerCase() === searchInfo ||
+  //       element.firstname.toLowerCase() +
+  //         ' ' +
+  //         element.lastname.toLowerCase() ===
+  //         searchInfo
   const handleSearch = () => {
     const filterResponse = userMembers.userMembers.filter(
       (element) =>
-        element.firstname.toLowerCase() === searchInfo ||
-        element.lastname.toLowerCase() === searchInfo ||
-        element.firstname.toLowerCase() +
-          ' ' +
-          element.lastname.toLowerCase() ===
-          searchInfo
+        element.firstname.toLowerCase().includes(searchInfo) ||
+        element.lastname.toLowerCase().includes(searchInfo)
     );
     setUsers(filterResponse);
     setPage(0);
@@ -129,7 +131,9 @@ export default function ProductShowList(userMembers) {
           </div>
         </Grid>
         <Grid item xs={6}>
-          <Button fullWidth variant="contained" onClick={() => PDF(users)}>Generate PDF</Button>
+          <Button fullWidth variant="contained" onClick={() => PDF(users)}>
+            Generate PDF
+          </Button>
         </Grid>
       </Grid>
 
@@ -157,7 +161,9 @@ export default function ProductShowList(userMembers) {
                       {row.firstname + ' ' + row.lastname}
                     </StyledTableCell>
                     <StyledTableCell align="right">{row.email}</StyledTableCell>
-                    <StyledTableCell align="right">{row.gender}</StyledTableCell>
+                    <StyledTableCell align="right">
+                      {row.gender}
+                    </StyledTableCell>
                     {/* <StyledTableCell align="right">{row.protein}</StyledTableCell> */}
                   </StyledTableRow>
                 ))}
