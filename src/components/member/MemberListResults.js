@@ -16,7 +16,9 @@ import {
   CardContent,
   TextField,
   InputAdornment,
-  SvgIcon
+  SvgIcon,
+  DialogTitle,
+  DialogContent,
 } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import 'react-confirm-alert/src/react-confirm-alert.css';
@@ -29,7 +31,6 @@ import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Notification from '../Notification';
 import ConfirmDialog from '../ConfirmDialog';
-import MemberShowEvents from './MemberShowEvents';
 
 const MemberListResults = ({ members, ...rest }) => {
   const [userDetails, setUserDetails] = useState([]);
@@ -168,12 +169,11 @@ const MemberListResults = ({ members, ...rest }) => {
     }
   };
 
+  const eventList = userDetails.attendedEvents.map((event) => <li>{event}</li>);
+
   const handleDisplayEvents = (details) => {
-    setOpen(true);
     setUserDetails(details);
-    // console.log(firstname + ' ' + lastname);
-    // console.log(id);
-    // console.log(events);
+    setOpen(true);
   };
 
   const handleClose = () => {
@@ -421,7 +421,17 @@ const MemberListResults = ({ members, ...rest }) => {
         open={open}
         onClose={handleClose}
       >
-        <MemberShowEvents userDetails={userDetails} />
+        <DialogTitle>
+          <div>{userDetails.firstname}</div>
+        </DialogTitle>
+        <DialogContent dividers>
+          <div>
+            {console.log(userDetails)}
+            <ul>
+              {eventList}
+            </ul>
+          </div>
+        </DialogContent>
       </Dialog>
     </>
   );
