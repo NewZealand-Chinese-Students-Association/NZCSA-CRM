@@ -164,8 +164,10 @@ const MemberListResults = ({ members, ...rest }) => {
     }
   };
 
-  const handleDisplayEvents = (event, member) => {
-    console.log(event, member);
+  const handleDisplayEvents = (firstname, lastname, id, events) => {
+    console.log(firstname + ' ' + lastname);
+    console.log(id);
+    console.log(events);
   };
 
   const handleLimitChange = (event) => {
@@ -382,8 +384,8 @@ const MemberListResults = ({ members, ...rest }) => {
                       <TableCell>
                         <Button
                           variant="outlined"
-                          onChange={(event) =>
-                            handleDisplayEvents(event, member)
+                          onClick={(event) =>
+                            handleDisplayEvents(member.firstname, member.lastname, member._id, member.attendedEvents)
                           }
                         >
                           View
