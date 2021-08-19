@@ -28,8 +28,10 @@ import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Notification from '../Notification';
 import ConfirmDialog from '../ConfirmDialog';
+import MemberShowEvents from './MemberShowEvents';
 
 const MemberListResults = ({ members, ...rest }) => {
+  const [openPopup, setOpenPopup] = useState(false);
   const [selectedMemberIds, setSelectedMemberIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -165,6 +167,7 @@ const MemberListResults = ({ members, ...rest }) => {
   };
 
   const handleDisplayEvents = (firstname, lastname, id, events) => {
+    setOpenPopup(true);
     console.log(firstname + ' ' + lastname);
     console.log(id);
     console.log(events);
@@ -407,6 +410,11 @@ const MemberListResults = ({ members, ...rest }) => {
           rowsPerPageOptions={[5, 10, 25]}
         />
       </Card>
+      <MemberShowEvents
+        openPopup={openPopup}
+        setOpen={setOpenPopup}
+      />
+
     </>
   );
 };
