@@ -1,16 +1,12 @@
-import { Dialog, DialogContent, DialogTitle } from '@material-ui/core';
-import React from 'react';
+import { Button, Grid, IconButton } from '@material-ui/core';
+import React, { useState } from 'react';
 
-export default function MemberShowEvents(props) {
-  const { firstName, lastName, openPopup, setOpen } = props;
+export default function MemberShowEvents(userDetails) {
+  console.log(userDetails.userDetails);
+
   return (
-    <Dialog open={openPopup}>
-      <DialogTitle>
-        <div>title</div>
-      </DialogTitle>
-      <DialogContent>
-        <div>content</div>
-      </DialogContent>
-    </Dialog>
+    <div className="App">
+      {userDetails.userDetails.attendedEvents}
+    </div>
   );
 }

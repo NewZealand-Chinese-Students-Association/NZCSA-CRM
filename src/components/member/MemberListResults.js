@@ -18,6 +18,7 @@ import {
   InputAdornment,
   SvgIcon
 } from '@material-ui/core';
+import Dialog from '@material-ui/core/Dialog';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { confirmAlert } from 'react-confirm-alert';
 import axios from 'axios';
@@ -31,7 +32,8 @@ import ConfirmDialog from '../ConfirmDialog';
 import MemberShowEvents from './MemberShowEvents';
 
 const MemberListResults = ({ members, ...rest }) => {
-  const [openPopup, setOpenPopup] = useState(false);
+  const [userDetails, setUserDetails] = useState([]);
+  const [open, setOpen] = useState(false);
   const [selectedMemberIds, setSelectedMemberIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -166,11 +168,16 @@ const MemberListResults = ({ members, ...rest }) => {
     }
   };
 
-  const handleDisplayEvents = (firstname, lastname, id, events) => {
-    setOpenPopup(true);
-    console.log(firstname + ' ' + lastname);
-    console.log(id);
-    console.log(events);
+  const handleDisplayEvents = (details) => {
+    setOpen(true);
+    setUserDetails(details);
+    // console.log(firstname + ' ' + lastname);
+    // console.log(id);
+    // console.log(events);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   const handleLimitChange = (event) => {
@@ -388,7 +395,7 @@ const MemberListResults = ({ members, ...rest }) => {
                         <Button
                           variant="outlined"
                           onClick={(event) =>
-                            handleDisplayEvents(member.firstname, member.lastname, member._id, member.attendedEvents)
+                            handleDisplayEvents(member)
                           }
                         >
                           View
@@ -410,11 +417,12 @@ const MemberListResults = ({ members, ...rest }) => {
           rowsPerPageOptions={[5, 10, 25]}
         />
       </Card>
-      <MemberShowEvents
-        openPopup={openPopup}
-        setOpen={setOpenPopup}
-      />
-
+      <Dialog
+        open={open}
+        onClose={handleClose}
+      >
+        <MemberShowEvents userDetails={userDetails} />
+      </Dialog>
     </>
   );
 };
