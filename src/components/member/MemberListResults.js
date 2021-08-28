@@ -169,7 +169,7 @@ const MemberListResults = ({ members, ...rest }) => {
     }
   };
 
-  const eventList = userDetails.attendedEvents.map((event) => <li>{event}</li>);
+  const eventList = (events) => events.map((event) => <li>{event}</li>);
 
   const handleDisplayEvents = (details) => {
     setUserDetails(details);
@@ -332,7 +332,7 @@ const MemberListResults = ({ members, ...rest }) => {
                   <TableCell>University</TableCell>
                   <TableCell>Faculty</TableCell>
                   <TableCell>Membership</TableCell>
-                  <TableCell>Attened events</TableCell>
+                  <TableCell>Events</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -422,13 +422,12 @@ const MemberListResults = ({ members, ...rest }) => {
         onClose={handleClose}
       >
         <DialogTitle>
-          <div>{userDetails.firstname}</div>
+          <div>Interested Events</div>
         </DialogTitle>
         <DialogContent dividers>
           <div>
-            {console.log(userDetails)}
             <ul>
-              {eventList}
+              {eventList(userDetails.attendedEvents)}
             </ul>
           </div>
         </DialogContent>
