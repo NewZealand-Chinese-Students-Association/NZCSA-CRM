@@ -33,7 +33,7 @@ import Notification from '../Notification';
 import ConfirmDialog from '../ConfirmDialog';
 
 const MemberListResults = ({ members, ...rest }) => {
-  const [userDetails, setUserDetails] = useState([]);
+  const [userDetails, setUserDetails] = useState({ attendedEvents: [] });
   const [open, setOpen] = useState(false);
   const [selectedMemberIds, setSelectedMemberIds] = useState([]);
   const [limit, setLimit] = useState(10);
@@ -169,12 +169,12 @@ const MemberListResults = ({ members, ...rest }) => {
     }
   };
 
-  const eventList = (events) => events.map((event) => <li>{event}</li>);
-
   const handleDisplayEvents = (details) => {
     setUserDetails(details);
     setOpen(true);
   };
+
+  const eventList = (events) => events.slice(0, 5).map((event) => <li key={event}>{event}</li>);
 
   const handleClose = () => {
     setOpen(false);
