@@ -77,15 +77,18 @@ const MemberListResults = ({ members, ...rest }) => {
       setMembersInfo(members);
     }
   }, [searchInfo, members]);
+  // (element) =>
+  // element.firstname.toLowerCase() === searchInfo ||
+  // element.lastname.toLowerCase() === searchInfo ||
+  // element.firstname.toLowerCase() +
+  // ' ' +
+  // element.lastname.toLowerCase() ===
+  // searchInfo
   const handleSearch = () => {
     const filterResponse = members.filter(
       (element) =>
-        element.firstname.toLowerCase() === searchInfo ||
-        element.lastname.toLowerCase() === searchInfo ||
-        element.firstname.toLowerCase() +
-        ' ' +
-        element.lastname.toLowerCase() ===
-        searchInfo
+        element.firstname.toLowerCase().includes(searchInfo) ||
+        element.lastname.toLowerCase().includes(searchInfo)
     );
     setMembersInfo(filterResponse);
     setPage(0);
