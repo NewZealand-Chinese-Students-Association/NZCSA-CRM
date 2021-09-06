@@ -31,11 +31,11 @@ const items = [
     icon: BarChartIcon,
     title: 'Archived Events'
   },
-  {
-    href: '/app/check-in',
-    icon: CheckIcon,
-    title: 'Check-in'
-  },
+  // {
+  //   href: '/app/check-in',
+  //   icon: CheckIcon,
+  //   title: 'Check-in'
+  // },
   // {
   //   href: '/app/settings',
   //   icon: SettingsIcon,
