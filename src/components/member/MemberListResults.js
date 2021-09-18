@@ -174,7 +174,16 @@ const MemberListResults = ({ members, ...rest }) => {
     setOpen(true);
   };
 
-  const eventList = (events) => events.slice(0, 5).map((event) => <li key={event}>{event}</li>);
+  const eventList = (events) => {
+    if (events.length === 0) {
+      return (
+        <text>This user have not signed up to any events</text>
+      );
+    }
+    return (
+      events.map((event) => <li key={event}>{event}</li>)
+    );
+  };
 
   const handleClose = () => {
     setOpen(false);
@@ -422,7 +431,7 @@ const MemberListResults = ({ members, ...rest }) => {
         onClose={handleClose}
       >
         <DialogTitle>
-          <div>Interested Events</div>
+          <div>{userDetails.firstname.charAt(0).toUpperCase() + userDetails.firstname.slice(1) + ' saved ' + userDetails.attendedEvents.length + ' events'}</div>
         </DialogTitle>
         <DialogContent dividers>
           <div>
