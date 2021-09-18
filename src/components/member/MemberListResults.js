@@ -177,7 +177,7 @@ const MemberListResults = ({ members, ...rest }) => {
   const eventList = (events) => {
     if (events.length === 0) {
       return (
-        <div>This user have not signed up to any events</div>
+        <div>~Nothing to see here~</div>
       );
     }
     return (
