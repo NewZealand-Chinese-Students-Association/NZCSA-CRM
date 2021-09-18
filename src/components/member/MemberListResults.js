@@ -33,7 +33,7 @@ import Notification from '../Notification';
 import ConfirmDialog from '../ConfirmDialog';
 
 const MemberListResults = ({ members, ...rest }) => {
-  const [userDetails, setUserDetails] = useState({ attendedEvents: [] });
+  const [userDetails, setUserDetails] = useState({ attendedEvents: [], firstname: '' });
   const [open, setOpen] = useState(false);
   const [selectedMemberIds, setSelectedMemberIds] = useState([]);
   const [limit, setLimit] = useState(10);
@@ -177,11 +177,11 @@ const MemberListResults = ({ members, ...rest }) => {
   const eventList = (events) => {
     if (events.length === 0) {
       return (
-        <text>This user have not signed up to any events</text>
+        <div>This user have not signed up to any events</div>
       );
     }
     return (
-      events.map((event) => <li key={event}>{event}</li>)
+      events.map((event) => <li key={event} style={{ 'padding': '2px' }}>{event}</li>)
     );
   };
 
@@ -431,7 +431,7 @@ const MemberListResults = ({ members, ...rest }) => {
         onClose={handleClose}
       >
         <DialogTitle>
-          <div>{userDetails.firstname.charAt(0).toUpperCase() + userDetails.firstname.slice(1) + ' saved ' + userDetails.attendedEvents.length + ' events'}</div>
+          <div>{userDetails.firstname.charAt(0).toUpperCase() + userDetails.firstname.slice(1) + ' signed up to ' + userDetails.attendedEvents.length + ' events'}</div>
         </DialogTitle>
         <DialogContent dividers>
           <div>
