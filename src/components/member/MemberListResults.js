@@ -434,11 +434,9 @@ const MemberListResults = ({ members, ...rest }) => {
           <div>{userDetails.firstname.charAt(0).toUpperCase() + userDetails.firstname.slice(1) + ' signed up to ' + userDetails.attendedEvents.length + ' events'}</div>
         </DialogTitle>
         <DialogContent dividers>
-          <div>
-            <ul>
-              {eventList(userDetails.attendedEvents)}
-            </ul>
-          </div>
+          <ul>
+            {eventList(userDetails.attendedEvents)}
+          </ul>
         </DialogContent>
       </Dialog>
     </>
