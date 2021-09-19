@@ -28,6 +28,7 @@ import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Notification from '../Notification';
 import ConfirmDialog from '../ConfirmDialog';
+import coreTeamList from '../../__mocks__/coreTeam';
 
 const MemberListResults = ({ members, eventData, ...rest }) => {
   const [userEventList, setUserEventList] = useState([]);
@@ -215,6 +216,16 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
     };
 
     try {
+      if (!coreTeamList.includes(localStorage.getItem('authToken'))) {
+        const errorInfo = {
+          response: {
+            data: {
+              error: 'You are not able to delete',
+            }
+          }
+        };
+        throw (errorInfo);
+      }
       console.log(selectedMemberIds[0]);
       await axios.delete(
         `https://nzcsa-backend.herokuapp.com/api/admin/delete-member/${selectedMemberIds[0]}`,
@@ -223,6 +234,8 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
       window.location.href = '/app/members';
     } catch (e) {
       console.log(e.response.data);
+      // eslint-disable-next-line no-alert
+      alert(e.response.data.error);
       setLoading(false);
       setTimeout(() => {
         setError('');
