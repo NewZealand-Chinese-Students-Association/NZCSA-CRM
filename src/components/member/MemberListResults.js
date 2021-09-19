@@ -29,7 +29,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Notification from '../Notification';
 import ConfirmDialog from '../ConfirmDialog';
 
-const MemberListResults = ({ members, ...rest }) => {
+const MemberListResults = ({ members, eventData, ...rest }) => {
+  const [userEventList, setUserEventList] = useState([]);
   const [selectedMemberIds, setSelectedMemberIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -168,7 +169,14 @@ const MemberListResults = ({ members, ...rest }) => {
   };
 
   const handleDisplayEvents = (event, member) => {
-    console.log(event, member);
+    let list1 = [];
+    console.log(typeof (event));
+    (member.attendedEvents).forEach((e) => {
+      list1.push(eventData[e]);
+    });
+    setUserEventList(list1);
+
+    console.log(list1);
   };
 
   const handleLimitChange = (event) => {
@@ -243,14 +251,14 @@ const MemberListResults = ({ members, ...rest }) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
   /*
-  const [checked, setChecked] = React.useState(true);
-  const displayIsMembership = (member) => {
-    if (member.isMembership) {
-      return '✓';
-    }
+const [checked, setChecked] = React.useState(true);
+const displayIsMembership = (member) => {
+  if (member.isMembership) {
+    return '✓';
+  }
 
-    return 'X';
-  };
+  return 'X';
+};
 */
   return (
     <>
@@ -385,7 +393,7 @@ const MemberListResults = ({ members, ...rest }) => {
                       <TableCell>
                         <Button
                           variant="outlined"
-                          onChange={(event) =>
+                          onClick={(event) =>
                             handleDisplayEvents(event, member)
                           }
                         >
