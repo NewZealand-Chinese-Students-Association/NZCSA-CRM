@@ -171,7 +171,6 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
 
   const handleDisplayEvents = (event, member) => {
     let list1 = [];
-    console.log(typeof (event));
     (member.attendedEvents).forEach((e) => {
       list1.push(eventData[e]);
     });
