@@ -32,8 +32,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Notification from '../Notification';
 import ConfirmDialog from '../ConfirmDialog';
 
-const MemberListResults = ({ members, eventDetails, ...rest }) => {
-  const [userDetails, setUserDetails] = useState({ attendedEvents: [], firstname: '' });
+const MemberListResults = ({ members, eventData, ...rest }) => {
+  const [userEvents, setUserEventList] = useState([]);
   const [open, setOpen] = useState(false);
   const [selectedMemberIds, setSelectedMemberIds] = useState([]);
   const [limit, setLimit] = useState(10);
@@ -170,20 +170,25 @@ const MemberListResults = ({ members, eventDetails, ...rest }) => {
   };
 
   const handleDisplayEvents = (details) => {
-    setUserDetails(details);
+    let list1 = [];
+    (details.attendedEvents).forEach((e) => {
+      if (e in eventData) {
+        list1.push(eventData[e].eventName);
+      }
+    });
+    setUserEventList(list1);
     setOpen(true);
   };
-
-  const eventList = (events) => {
-    if (events.length === 0) {
-      return (
-        <div>~Nothing to see here~</div>
-      );
-    }
-    return (
-      events.map((event) => <li key={event} style={{ 'padding': '2px' }}>{event}</li>)
-    );
-  };
+  // const eventList = (events) => {
+  //   if (events.length === 0) {
+  //     return (
+  //       <div>~Nothing to see here~</div>
+  //     );
+  //   }
+  //   return (
+  //     events.map((event) => <li key={event} style={{ 'padding': '2px' }}>{event}</li>)
+  //   );
+  // };
 
   const handleClose = () => {
     setOpen(false);
@@ -431,11 +436,11 @@ const MemberListResults = ({ members, eventDetails, ...rest }) => {
         onClose={handleClose}
       >
         <DialogTitle>
-          <div>{userDetails.firstname.charAt(0).toUpperCase() + userDetails.firstname.slice(1) + ' signed up to ' + userDetails.attendedEvents.length + ' events'}</div>
+          <div>Events</div>
         </DialogTitle>
         <DialogContent dividers>
           <ul>
-            {eventList(userDetails.attendedEvents)}
+            {userEvents.map((event) => <li key={event} style={{ 'padding': '1px' }}>{event}</li>)}
           </ul>
         </DialogContent>
       </Dialog>
