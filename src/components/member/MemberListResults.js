@@ -406,7 +406,7 @@ const displayIsMembership = (member) => {
                         <Button
                           variant="outlined"
                           onClick={(event) =>
-                            handleDisplayEvents(event, member)
+                            handleDisplayEvents(member)
                           }
                         >
                           View
