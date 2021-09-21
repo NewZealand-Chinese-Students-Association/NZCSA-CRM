@@ -180,7 +180,7 @@ const MemberListResults = ({ members, ...rest }) => {
         <div>~Nothing to see here~</div>
       );
     }
-    return (    //implement get name here
+    return (
       events.map((event) => <li key={event} style={{ 'padding': '2px' }}>{event}</li>)
     );
   };
