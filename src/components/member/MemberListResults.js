@@ -169,7 +169,7 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
     }
   };
 
-  const handleDisplayEvents = (event, member) => {
+  const handleDisplayEvents = (member) => {
     let list1 = [];
     (member.attendedEvents).forEach((e) => {
       list1.push(eventData[e]);
