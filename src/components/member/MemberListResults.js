@@ -32,7 +32,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Notification from '../Notification';
 import ConfirmDialog from '../ConfirmDialog';
 
-const MemberListResults = ({ members, ...rest }) => {
+const MemberListResults = ({ members, eventDetails, ...rest }) => {
   const [userDetails, setUserDetails] = useState({ attendedEvents: [], firstname: '' });
   const [open, setOpen] = useState(false);
   const [selectedMemberIds, setSelectedMemberIds] = useState([]);
