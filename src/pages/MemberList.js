@@ -14,6 +14,7 @@ const MemberList = () => {
     }
   };
   const [members, setMembers] = useState([]);
+  const [eventData, setEventData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,6 +23,13 @@ const MemberList = () => {
         .then((res) => {
           setLoading(false);
           setMembers((res.data).reverse());
+        });
+
+      axios.get('https://nzcsa-backend.herokuapp.com/api/private/get-events-info', config)
+        .then((res) => {
+          setLoading(false);
+          setEventData((res.data));
+          console.log(eventData);
         });
     };
     fetchData();
@@ -43,7 +51,7 @@ const MemberList = () => {
             {loading ? (
               <CircularProgress color="inherit" size="2rem" />
             ) : (
-              <MemberListResults members={members} />
+              <MemberListResults members={members} eventData={eventData} />
             )}
 
           </Box>

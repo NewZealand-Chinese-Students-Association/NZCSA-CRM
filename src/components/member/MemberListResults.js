@@ -16,8 +16,11 @@ import {
   CardContent,
   TextField,
   InputAdornment,
-  SvgIcon
+  SvgIcon,
+  DialogTitle,
+  DialogContent,
 } from '@material-ui/core';
+import Dialog from '@material-ui/core/Dialog';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { confirmAlert } from 'react-confirm-alert';
 import axios from 'axios';
@@ -29,7 +32,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Notification from '../Notification';
 import ConfirmDialog from '../ConfirmDialog';
 
-const MemberListResults = ({ members, ...rest }) => {
+const MemberListResults = ({ members, eventData, ...rest }) => {
+  const [userEvents, setUserEventList] = useState([]);
+  const [open, setOpen] = useState(false);
   const [selectedMemberIds, setSelectedMemberIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -167,8 +172,19 @@ const MemberListResults = ({ members, ...rest }) => {
     }
   };
 
-  const handleDisplayEvents = (event, member) => {
-    console.log(event, member);
+  const handleDisplayEvents = (details) => {
+    let list1 = [];
+    (details.attendedEvents).forEach((e) => {
+      if (e in eventData) {
+        list1.push(eventData[e].eventName);
+      }
+    });
+    setUserEventList(list1);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   const handleLimitChange = (event) => {
@@ -323,7 +339,7 @@ const MemberListResults = ({ members, ...rest }) => {
                   <TableCell>University</TableCell>
                   <TableCell>Faculty</TableCell>
                   <TableCell>Membership</TableCell>
-                  <TableCell>Attened events</TableCell>
+                  <TableCell>Events</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -385,8 +401,8 @@ const MemberListResults = ({ members, ...rest }) => {
                       <TableCell>
                         <Button
                           variant="outlined"
-                          onChange={(event) =>
-                            handleDisplayEvents(event, member)
+                          onClick={(event) =>
+                            handleDisplayEvents(member)
                           }
                         >
                           View
@@ -408,6 +424,19 @@ const MemberListResults = ({ members, ...rest }) => {
           rowsPerPageOptions={[5, 10, 25]}
         />
       </Card>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+      >
+        <DialogTitle>
+          <div>Events</div>
+        </DialogTitle>
+        <DialogContent dividers>
+          <ul>
+            {userEvents.map((event) => <li key={event} style={{ 'padding': '1px' }}>{event}</li>)}
+          </ul>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
