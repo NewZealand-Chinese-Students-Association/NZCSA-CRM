@@ -34,6 +34,7 @@ import ConfirmDialog from '../ConfirmDialog';
 
 const MemberListResults = ({ members, eventData, ...rest }) => {
   const [userEvents, setUserEventList] = useState([]);
+  const [userDetails, setUserDetails] = useState({ firstname: '' });
   const [open, setOpen] = useState(false);
   const [selectedMemberIds, setSelectedMemberIds] = useState([]);
   const [limit, setLimit] = useState(10);
@@ -174,6 +175,7 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
 
   const handleDisplayEvents = (details) => {
     let list1 = [];
+    setUserDetails(details);
     (details.attendedEvents).forEach((e) => {
       if (e in eventData) {
         list1.push(eventData[e].eventName);
@@ -429,7 +431,7 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
         onClose={handleClose}
       >
         <DialogTitle>
-          <div>Events</div>
+          <div>{userDetails.firstname.charAt(0).toUpperCase() + userDetails.firstname.slice(1) + ' is interested in ' + userEvents.length + ' events'}</div>
         </DialogTitle>
         <DialogContent dividers>
           <ul>
