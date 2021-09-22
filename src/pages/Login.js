@@ -115,7 +115,7 @@ const Login = () => {
                   name="email"
                   // onBlur={handleBlur}
                   onChange={(e) => {
-                    setEmail(e.target.value.toLowerCase);
+                    setEmail(e.target.value.toLowerCase());
                   }}
                   type="email"
                   variant="outlined"
