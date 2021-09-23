@@ -139,9 +139,14 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
   };
 
   const handleSelectOne = (event, id) => {
-    const selectedIndex = selectedMemberIds.indexOf(id);
-    let newSelectedMemberIds = [];
-    /*
+    if (!coreTeamList.includes(localStorage.getItem('email'))) {
+      /* eslint-disable */
+      alert('Please contact the IT department or CoreTeam');
+      /* eslint-enable */
+    } else {
+      const selectedIndex = selectedMemberIds.indexOf(id);
+      let newSelectedMemberIds = [];
+      /*
   const aStyle = {
     fontStyle: 'italic',
     textDecorationLine: 'underline',
@@ -149,28 +154,29 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
   };
   .then(window.location.href = '/app/members');
   */
-    if (selectedIndex === -1) {
-      newSelectedMemberIds = newSelectedMemberIds.concat(selectedMemberIds, id);
-    } else if (selectedIndex === 0) {
-      newSelectedMemberIds = newSelectedMemberIds.concat(
-        selectedMemberIds.slice(1)
-      );
-    } else if (selectedIndex === selectedMemberIds.length - 1) {
-      newSelectedMemberIds = newSelectedMemberIds.concat(
-        selectedMemberIds.slice(0, -1)
-      );
-    } else if (selectedIndex > 0) {
-      newSelectedMemberIds = newSelectedMemberIds.concat(
-        selectedMemberIds.slice(0, selectedIndex),
-        selectedMemberIds.slice(selectedIndex + 1)
-      );
-    }
-    setSelectedMemberIds(newSelectedMemberIds);
-    if (newSelectedMemberIds.length > 0) {
-      setDeleteButton(false);
-    }
-    if (newSelectedMemberIds.length === 0) {
-      setDeleteButton(true);
+      if (selectedIndex === -1) {
+        newSelectedMemberIds = newSelectedMemberIds.concat(selectedMemberIds, id);
+      } else if (selectedIndex === 0) {
+        newSelectedMemberIds = newSelectedMemberIds.concat(
+          selectedMemberIds.slice(1)
+        );
+      } else if (selectedIndex === selectedMemberIds.length - 1) {
+        newSelectedMemberIds = newSelectedMemberIds.concat(
+          selectedMemberIds.slice(0, -1)
+        );
+      } else if (selectedIndex > 0) {
+        newSelectedMemberIds = newSelectedMemberIds.concat(
+          selectedMemberIds.slice(0, selectedIndex),
+          selectedMemberIds.slice(selectedIndex + 1)
+        );
+      }
+      setSelectedMemberIds(newSelectedMemberIds);
+      if (newSelectedMemberIds.length > 0) {
+        setDeleteButton(false);
+      }
+      if (newSelectedMemberIds.length === 0) {
+        setDeleteButton(true);
+      }
     }
   };
 
@@ -178,7 +184,6 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
     // initilie list and update user details
     let list = [];
     setUserDetails(details);
-    console.log(localStorage.getItem('email'));
     // for each attended event, add to list, push event name to list if it's a valid event
     (details.attendedEvents).forEach((e) => {
       if (e in eventData) {
@@ -212,7 +217,13 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
       subTitle: "You can't undo this operation",
     });
     */
-    confirm(id);
+    if (!coreTeamList.includes(localStorage.getItem('email'))) {
+      /* eslint-disable */
+      alert('Please contact the IT department or CoreTeam');
+      /* eslint-enable */
+    } else {
+      confirm(id);
+    }
     /*
     setNotify({
       isOpen: true,

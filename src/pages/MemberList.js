@@ -29,7 +29,6 @@ const MemberList = () => {
         .then((res) => {
           setLoading(false);
           setEventData((res.data));
-          console.log(eventData);
         });
     };
     fetchData();
