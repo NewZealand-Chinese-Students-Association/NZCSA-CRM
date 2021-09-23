@@ -44,6 +44,7 @@ const Login = () => {
       }
 
       localStorage.setItem('authToken', data.token);
+      localStorage.setItem('email', email);
 
       window.location.href = '/app/dashboard';
     } catch (e) {

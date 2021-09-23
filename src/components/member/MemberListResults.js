@@ -178,8 +178,7 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
     // initilie list and update user details
     let list = [];
     setUserDetails(details);
-    console.log(coreTeamList);
-    console.log(localStorage);
+    console.log(localStorage.getItem('email'));
     // for each attended event, add to list, push event name to list if it's a valid event
     (details.attendedEvents).forEach((e) => {
       if (e in eventData) {
