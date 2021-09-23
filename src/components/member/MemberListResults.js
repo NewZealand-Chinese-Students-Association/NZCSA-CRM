@@ -29,6 +29,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import coreTeamList from 'src/__mocks__/coreTeam';
 import Notification from '../Notification';
 import ConfirmDialog from '../ConfirmDialog';
 
@@ -174,14 +175,21 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
   };
 
   const handleDisplayEvents = (details) => {
-    let list1 = [];
+    // initilie list and update user details
+    let list = [];
     setUserDetails(details);
+    console.log(coreTeamList);
+    console.log(localStorage);
+    // for each attended event, add to list, push event name to list if it's a valid event
     (details.attendedEvents).forEach((e) => {
       if (e in eventData) {
-        list1.push(eventData[e].eventName);
+        list.push(eventData[e].eventName);
       }
     });
-    setUserEventList(list1);
+    if (list.length == 0) {
+      list.push('Nothing to see here');
+    }
+    setUserEventList(list);
     setOpen(true);
   };
 
@@ -431,12 +439,10 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
         onClose={handleClose}
       >
         <DialogTitle>
-          <div>{userDetails.firstname.charAt(0).toUpperCase() + userDetails.firstname.slice(1) + ' is interested in ' + userEvents.length + ' events'}</div>
+          <div>{userDetails.firstname.charAt(0).toUpperCase() + userDetails.firstname.slice(1) + ' is interested in ' + userEvents.length + ' event(s)'}</div>
         </DialogTitle>
         <DialogContent dividers>
-          <ul>
-            {userEvents.map((event) => <li key={event} style={{ 'padding': '1px' }}>{event}</li>)}
-          </ul>
+          {userEvents.map((event) => <ul key={event} style={{ 'padding': '1px' }}>{event}</ul>)}
         </DialogContent>
       </Dialog>
     </>
