@@ -124,6 +124,19 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
     });
   };
 
+  // alert message for non advanced admins
+  const contactOthers = () => {
+    confirmAlert({
+      title: 'Permission denied',
+      message: 'Contact the IT department or the CoreTeam',
+      buttons: [
+        {
+          label: 'Ok',
+        },
+      ]
+    });
+  };
+
   const handleSelectAll = (event) => {
     let newSelectedMemberIds;
 
@@ -140,9 +153,7 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
 
   const handleSelectOne = (event, id) => {
     if (!coreTeamList.includes(localStorage.getItem('email'))) {
-      /* eslint-disable */
-      alert('Please contact the IT department or CoreTeam');
-      /* eslint-enable */
+      contactOthers();
     } else {
       const selectedIndex = selectedMemberIds.indexOf(id);
       let newSelectedMemberIds = [];
@@ -218,9 +229,7 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
     });
     */
     if (!coreTeamList.includes(localStorage.getItem('email'))) {
-      /* eslint-disable */
-      alert('Please contact the IT department or CoreTeam');
-      /* eslint-enable */
+      contactOthers();
     } else {
       confirm(id);
     }
