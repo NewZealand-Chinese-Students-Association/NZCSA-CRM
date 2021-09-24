@@ -42,6 +42,7 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
   const [page, setPage] = useState(0);
   const [searchInfo, setSearchInfo] = useState('');
   const [membersInfo, setMembersInfo] = useState([]);
+  const advancedAdmin = coreTeamList.includes(localStorage.getItem('email'));
   const [notify, setNotify] = useState({
     isOpen: false,
     message: '',
@@ -152,7 +153,7 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
   };
 
   const handleSelectOne = (event, id) => {
-    if (!coreTeamList.includes(localStorage.getItem('email'))) {
+    if (!advancedAdmin) {
       contactOthers();
     } else {
       const selectedIndex = selectedMemberIds.indexOf(id);
@@ -228,7 +229,7 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
       subTitle: "You can't undo this operation",
     });
     */
-    if (!coreTeamList.includes(localStorage.getItem('email'))) {
+    if (!advancedAdmin))) {
       contactOthers();
     } else {
       confirm(id);
