@@ -229,7 +229,7 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
       subTitle: "You can't undo this operation",
     });
     */
-    if (!advancedAdmin))) {
+    if (!advancedAdmin) {
       contactOthers();
     } else {
       confirm(id);
