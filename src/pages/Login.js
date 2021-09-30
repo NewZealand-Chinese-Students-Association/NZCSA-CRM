@@ -44,6 +44,7 @@ const Login = () => {
       }
 
       localStorage.setItem('authToken', data.token);
+      localStorage.setItem('email', email);
 
       window.location.href = '/app/dashboard';
     } catch (e) {
@@ -115,7 +116,7 @@ const Login = () => {
                   name="email"
                   // onBlur={handleBlur}
                   onChange={(e) => {
-                    setEmail(e.target.value);
+                    setEmail(e.target.value.toLowerCase());
                   }}
                   type="email"
                   variant="outlined"

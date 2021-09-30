@@ -14,15 +14,36 @@ const MemberList = () => {
     }
   };
   const [members, setMembers] = useState([]);
+  const [eventData, setEventData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      axios.get('https://nzcsa-backend.herokuapp.com/api/admin/show-member-list', config)
-        .then((res) => {
-          setLoading(false);
-          setMembers((res.data).reverse());
+      const memberListRes = axios.get('https://nzcsa-backend.herokuapp.com/api/admin/show-member-list', config);
+      const eventInfoRes = axios.get('https://nzcsa-backend.herokuapp.com/api/private/get-events-info', config);
+
+      axios.all([memberListRes, eventInfoRes])
+        .then(
+          axios.spread((...res) => {
+            setLoading(false);
+            setMembers((res[0].data).reverse());
+            setEventData((res[1].data));
+          })
+        ).catch((err) => {
+          console.log(err);
         });
+
+      // axios.get('https://nzcsa-backend.herokuapp.com/api/admin/show-member-list', config)
+      //   .then((res) => {
+      //     // setLoading(false);
+      //     setMembers((res.data).reverse());
+      //   });
+
+      // axios.get('https://nzcsa-backend.herokuapp.com/api/private/get-events-info', config)
+      //   .then((res) => {
+      //     setLoading(false);
+      //     setEventData((res.data));
+      //   });
     };
     fetchData();
   }, []);
@@ -43,7 +64,7 @@ const MemberList = () => {
             {loading ? (
               <CircularProgress color="inherit" size="2rem" />
             ) : (
-              <MemberListResults members={members} />
+              <MemberListResults members={members} eventData={eventData} />
             )}
 
           </Box>
