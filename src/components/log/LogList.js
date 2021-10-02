@@ -23,14 +23,10 @@ import { Search as SearchIcon } from 'react-feather';
 import moment from 'moment';
 
 const MemberListResults = ({ logs, ...rest }) => {
-  const [selectedMemberIds, setSelectedMemberIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
   const [searchInfo, setSearchInfo] = useState('');
   const [logInfo, setLogInfo] = useState([]);
-  const [deleteButton, setDeleteButton] = useState(true);
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
 
   // for search function
   useEffect(() => {
@@ -52,60 +48,6 @@ const MemberListResults = ({ logs, ...rest }) => {
     if (event.code === 'Enter') {
       handleSearch();
     }
-  };
-
-  const handleSelectAll = (event) => {
-    let newSelectedMemberIds;
-
-    if (event.target.checked) {
-      newSelectedMemberIds = logs.map((member) => member._id);
-      setDeleteButton(false);
-    } else {
-      newSelectedMemberIds = [];
-      setDeleteButton(true);
-    }
-
-    setSelectedMemberIds(newSelectedMemberIds);
-  };
-
-  const handleSelectOne = (event, id) => {
-    const selectedIndex = selectedMemberIds.indexOf(id);
-    let newSelectedMemberIds = [];
-    /*
-  const aStyle = {
-    fontStyle: 'italic',
-    textDecorationLine: 'underline',
-    color: 'blue',
-  };
-  .then(window.location.href = '/app/members');
-  */
-    if (selectedIndex === -1) {
-      newSelectedMemberIds = newSelectedMemberIds.concat(selectedMemberIds, id);
-    } else if (selectedIndex === 0) {
-      newSelectedMemberIds = newSelectedMemberIds.concat(
-        selectedMemberIds.slice(1)
-      );
-    } else if (selectedIndex === selectedMemberIds.length - 1) {
-      newSelectedMemberIds = newSelectedMemberIds.concat(
-        selectedMemberIds.slice(0, -1)
-      );
-    } else if (selectedIndex > 0) {
-      newSelectedMemberIds = newSelectedMemberIds.concat(
-        selectedMemberIds.slice(0, selectedIndex),
-        selectedMemberIds.slice(selectedIndex + 1)
-      );
-    }
-    setSelectedMemberIds(newSelectedMemberIds);
-    if (newSelectedMemberIds.length > 0) {
-      setDeleteButton(false);
-    }
-    if (newSelectedMemberIds.length === 0) {
-      setDeleteButton(true);
-    }
-  };
-
-  const handleDisplayEvents = (event, member) => {
-    console.log(event, member);
   };
 
   const handleLimitChange = (event) => {
