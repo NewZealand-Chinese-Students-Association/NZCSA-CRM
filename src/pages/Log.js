@@ -31,17 +31,28 @@ const Log = () => {
   //   fetchData();
   // }, []);
 
+  // Temporary data before connecting to log api
   const dummyData = [
     {
-      userId: '60f2c2ebf8aefb0004760bed',
-      event: '60f364f163d1b4000405db9b',
-      time: '2021-07-22T06:33:04.474Z'
+      _id: {
+        $oid: '614d5ed57a181958fcc658bb'
+      },
+      operator: 'alex',
+      event: 'promoted user',
+      name: 'test',
+      id: '6132f66e0d5c8500047d1202',
+      time: new Date().getTime()
     },
     {
-      userId: '60f2c2ebf8aefb0004760bed',
-      event: '60f364f163d1b4000405db9b',
-      time: '2021-07-22T06:33:04.474Z'
-    },
+      _id: {
+        $oid: '614d64eae7d7bc528cd25801'
+      },
+      operator: 'alex',
+      event: 'removed user',
+      name: 'test',
+      id: '6132f66e0d5c8500047d1202',
+      time: new Date().getTime()
+    }
   ];
 
   useEffect(() => {

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Box,
@@ -11,7 +10,6 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  Typography,
   Button,
   CardContent,
   TextField,
@@ -22,12 +20,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import { confirmAlert } from 'react-confirm-alert';
 import axios from 'axios';
 import { Search as SearchIcon } from 'react-feather';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
-import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Notification from '../Notification';
-import ConfirmDialog from '../ConfirmDialog';
+import moment from 'moment';
 
 const MemberListResults = ({ logs, ...rest }) => {
   const [selectedMemberIds, setSelectedMemberIds] = useState([]);
@@ -35,16 +28,6 @@ const MemberListResults = ({ logs, ...rest }) => {
   const [page, setPage] = useState(0);
   const [searchInfo, setSearchInfo] = useState('');
   const [logInfo, setLogInfo] = useState([]);
-  const [notify, setNotify] = useState({
-    isOpen: false,
-    message: '',
-    type: ''
-  });
-  const [confirmDialog, setConfirmDialog] = useState({
-    isOpen: false,
-    title: '',
-    subTitle: ''
-  });
   const [deleteButton, setDeleteButton] = useState(true);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -55,18 +38,11 @@ const MemberListResults = ({ logs, ...rest }) => {
       setLogInfo(logs);
     }
   }, [searchInfo, logs]);
-  // (element) =>
-  // element.firstname.toLowerCase() === searchInfo ||
-  // element.lastname.toLowerCase() === searchInfo ||
-  // element.firstname.toLowerCase() +
-  // ' ' +
-  // element.lastname.toLowerCase() ===
-  // searchInfo
   const handleSearch = () => {
     const filterResponse = logs.filter(
       (element) =>
-        element.firstname.toLowerCase().includes(searchInfo) ||
-        element.lastname.toLowerCase().includes(searchInfo)
+        element.operator.toLowerCase().includes(searchInfo) ||
+        element.event.toLowerCase().includes(searchInfo)
     );
     setLogInfo(filterResponse);
     setPage(0);
@@ -140,96 +116,10 @@ const MemberListResults = ({ logs, ...rest }) => {
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
-  const handleChecked = (event, id) => {
-    /*
-    setConfirmDialog({
-      isOpen: true,
-      title: 'Are you sure to delete this record?',
-      subTitle: "You can't undo this operation",
-    });
-    */
-    /*
-    setNotify({
-      isOpen: true,
-      message: 'Changes made successfully',
-      type: 'success'
-    });
-    */
-  };
 
-  const handleDelete = async () => {
-    setLoading(true);
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('authToken')}`
-      }
-    };
-
-    try {
-      console.log(selectedMemberIds[0]);
-      await axios.delete(
-        `https://nzcsa-backend.herokuapp.com/api/admin/delete-member/${selectedMemberIds[0]}`,
-        config
-      );
-      window.location.href = '/app/members';
-    } catch (e) {
-      console.log(e.response.data);
-      setLoading(false);
-      setTimeout(() => {
-        setError('');
-      }, 5000);
-    }
-  };
-
-  const confirmDelete = (memberIds) => {
-    confirmAlert({
-      title: 'Are you sure to do this?',
-      message: 'You cannot undo this action.',
-      buttons: [
-        {
-          label: 'Yes',
-          onClick: () => console.log('')
-        },
-        {
-          label: 'No',
-          onClick: () => console.log('')
-        }
-      ]
-    });
-  };
-  /*
-  const [checked, setChecked] = React.useState(true);
-  const displayIsMembership = (member) => {
-    if (member.isMembership) {
-      return '✓';
-    }
-
-    return 'X';
-  };
-*/
   return (
     <>
       <Box>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'flex-end'
-          }}
-        >
-          <Button
-            color="primary"
-            disabled={deleteButton}
-            variant="contained"
-            onClick={handleDelete}
-          >
-            {loading ? (
-              <CircularProgress color="inherit" size="2rem" />
-            ) : (
-              <>Delete Log</>
-            )}
-          </Button>
-        </Box>
         <Box sx={{ mt: 3 }}>
           <Card>
             <CardContent>
@@ -261,43 +151,25 @@ const MemberListResults = ({ logs, ...rest }) => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={selectedMemberIds.length === logs.length}
-                      color="primary"
-                      indeterminate={
-                        selectedMemberIds.length > 0 &&
-                        selectedMemberIds.length < logs.length
-                      }
-                      onChange={handleSelectAll}
-                    />
-                  </TableCell>
-                  <TableCell>User ID</TableCell>
+                  <TableCell>Operator</TableCell>
                   <TableCell>Event</TableCell>
-                  <TableCell>Time</TableCell>
+                  <TableCell>Name</TableCell>
+                  <TableCell>ID</TableCell>
+                  <TableCell>time</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {logInfo
                   .slice(page * limit, page * limit + limit)
                   .map((log) => (
-                    <TableRow
-                      hover
-                      key={log._id}
-                      selected={selectedMemberIds.indexOf(log._id) !== -1}
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          checked={selectedMemberIds.indexOf(log._id) !== -1}
-                          onChange={(event) =>
-                            handleSelectOne(event, log._id)
-                          }
-                          value="true"
-                        />
-                      </TableCell>
-                      <TableCell>{log.userId}</TableCell>
+                    <TableRow hover key={log._id}>
+                      <TableCell>{log.operator}</TableCell>
                       <TableCell>{log.event}</TableCell>
-                      <TableCell>{log.time}</TableCell>
+                      <TableCell>{log.name}</TableCell>
+                      <TableCell>{log.id}</TableCell>
+                      <TableCell>
+                        {moment(log.time).format('DD/MM/YYYY')}
+                      </TableCell>
                     </TableRow>
                   ))}
               </TableBody>
@@ -318,9 +190,4 @@ const MemberListResults = ({ logs, ...rest }) => {
   );
 };
 
-/*
-MemberListResults.propTypes = {
-  members: PropTypes.object.isRequired
-};
-*/
 export default MemberListResults;
