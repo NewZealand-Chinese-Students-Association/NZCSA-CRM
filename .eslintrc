@@ -42,6 +42,7 @@
     "function-paren-newline": "off",
     "eqeqeq": "off",
     "linebreak-style": "off",
-    "new-cap": "off"
+    "new-cap": "off",
+    "arrow-body-style": "off"
   }
 }
