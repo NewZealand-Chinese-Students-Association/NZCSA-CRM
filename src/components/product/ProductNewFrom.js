@@ -93,7 +93,7 @@ const ProductNewFrom = () => {
 
       console.log(info);
       await axios.post(
-        'http://localhost:5000/api/admin/add-events',
+        'https://nzcsa-backend.herokuapp.com/api/admin/add-events',
         info,
         config
       );
