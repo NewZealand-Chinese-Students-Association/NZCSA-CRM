@@ -202,9 +202,6 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
         list.push(eventData[e].eventName);
       }
     });
-    if (list.length == 0) {
-      list.push('Nothing to see here');
-    }
     setUserEventList(list);
     setOpen(true);
   };
