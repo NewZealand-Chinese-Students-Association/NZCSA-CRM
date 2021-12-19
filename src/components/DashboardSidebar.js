@@ -68,7 +68,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           variant="h5"
           style={{ textTransform: 'capitalize' }}
         >
-          {userInfo.firstname }
+          {userInfo.firstname}
           {' '}
           {userInfo.lastname}
         </Typography>
@@ -111,8 +111,16 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           align="center"
           variant="body2"
         >
-          Contact Melo Guan
+          Contact
         </Typography>
+        <Typography
+          align="center"
+          variant="body2"
+        >
+          Kirsty Gong or Alex Liang
+
+        </Typography>
+
       </Box>
     </Box>
   );
