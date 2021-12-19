@@ -44,6 +44,7 @@ const ProductListToolbar = ({ props, handleSearch }) => {
           onClose={handleClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
+          maxWidth="md"
         >
           <ProductNewFrom />
         </Dialog>

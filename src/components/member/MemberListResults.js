@@ -16,8 +16,11 @@ import {
   CardContent,
   TextField,
   InputAdornment,
-  SvgIcon
+  SvgIcon,
+  DialogTitle,
+  DialogContent,
 } from '@material-ui/core';
+import Dialog from '@material-ui/core/Dialog';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { confirmAlert } from 'react-confirm-alert';
 import axios from 'axios';
@@ -26,15 +29,20 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import coreTeamList from 'src/__mocks__/coreTeam';
 import Notification from '../Notification';
 import ConfirmDialog from '../ConfirmDialog';
 
-const MemberListResults = ({ members, ...rest }) => {
+const MemberListResults = ({ members, eventData, ...rest }) => {
+  const [userEvents, setUserEventList] = useState([]);
+  const [userDetails, setUserDetails] = useState({ firstname: '' });
+  const [open, setOpen] = useState(false);
   const [selectedMemberIds, setSelectedMemberIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
   const [searchInfo, setSearchInfo] = useState('');
   const [membersInfo, setMembersInfo] = useState([]);
+  const advancedAdmin = coreTeamList.includes(localStorage.getItem('email'));
   const [notify, setNotify] = useState({
     isOpen: false,
     message: '',
@@ -117,6 +125,19 @@ const MemberListResults = ({ members, ...rest }) => {
     });
   };
 
+  // alert message for non advanced admins
+  const contactOthers = () => {
+    confirmAlert({
+      title: 'Permission denied',
+      message: 'Contact the IT department or the CoreTeam',
+      buttons: [
+        {
+          label: 'Ok',
+        },
+      ]
+    });
+  };
+
   const handleSelectAll = (event) => {
     let newSelectedMemberIds;
 
@@ -132,9 +153,12 @@ const MemberListResults = ({ members, ...rest }) => {
   };
 
   const handleSelectOne = (event, id) => {
-    const selectedIndex = selectedMemberIds.indexOf(id);
-    let newSelectedMemberIds = [];
-    /*
+    if (!advancedAdmin) {
+      contactOthers();
+    } else {
+      const selectedIndex = selectedMemberIds.indexOf(id);
+      let newSelectedMemberIds = [];
+      /*
   const aStyle = {
     fontStyle: 'italic',
     textDecorationLine: 'underline',
@@ -142,33 +166,51 @@ const MemberListResults = ({ members, ...rest }) => {
   };
   .then(window.location.href = '/app/members');
   */
-    if (selectedIndex === -1) {
-      newSelectedMemberIds = newSelectedMemberIds.concat(selectedMemberIds, id);
-    } else if (selectedIndex === 0) {
-      newSelectedMemberIds = newSelectedMemberIds.concat(
-        selectedMemberIds.slice(1)
-      );
-    } else if (selectedIndex === selectedMemberIds.length - 1) {
-      newSelectedMemberIds = newSelectedMemberIds.concat(
-        selectedMemberIds.slice(0, -1)
-      );
-    } else if (selectedIndex > 0) {
-      newSelectedMemberIds = newSelectedMemberIds.concat(
-        selectedMemberIds.slice(0, selectedIndex),
-        selectedMemberIds.slice(selectedIndex + 1)
-      );
-    }
-    setSelectedMemberIds(newSelectedMemberIds);
-    if (newSelectedMemberIds.length > 0) {
-      setDeleteButton(false);
-    }
-    if (newSelectedMemberIds.length === 0) {
-      setDeleteButton(true);
+      if (selectedIndex === -1) {
+        newSelectedMemberIds = newSelectedMemberIds.concat(selectedMemberIds, id);
+      } else if (selectedIndex === 0) {
+        newSelectedMemberIds = newSelectedMemberIds.concat(
+          selectedMemberIds.slice(1)
+        );
+      } else if (selectedIndex === selectedMemberIds.length - 1) {
+        newSelectedMemberIds = newSelectedMemberIds.concat(
+          selectedMemberIds.slice(0, -1)
+        );
+      } else if (selectedIndex > 0) {
+        newSelectedMemberIds = newSelectedMemberIds.concat(
+          selectedMemberIds.slice(0, selectedIndex),
+          selectedMemberIds.slice(selectedIndex + 1)
+        );
+      }
+      setSelectedMemberIds(newSelectedMemberIds);
+      if (newSelectedMemberIds.length > 0) {
+        setDeleteButton(false);
+      }
+      if (newSelectedMemberIds.length === 0) {
+        setDeleteButton(true);
+      }
     }
   };
 
-  const handleDisplayEvents = (event, member) => {
-    console.log(event, member);
+  const handleDisplayEvents = (details) => {
+    // initilie list and update user details
+    let list = [];
+    setUserDetails(details);
+    // for each attended event, add to list, push event name to list if it's a valid event
+    (details.attendedEvents).forEach((e) => {
+      if (e in eventData) {
+        list.push(eventData[e].eventName);
+      }
+    });
+    if (list.length == 0) {
+      list.push('Nothing to see here');
+    }
+    setUserEventList(list);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   const handleLimitChange = (event) => {
@@ -187,7 +229,11 @@ const MemberListResults = ({ members, ...rest }) => {
       subTitle: "You can't undo this operation",
     });
     */
-    confirm(id);
+    if (!advancedAdmin) {
+      contactOthers();
+    } else {
+      confirm(id);
+    }
     /*
     setNotify({
       isOpen: true,
@@ -323,7 +369,7 @@ const MemberListResults = ({ members, ...rest }) => {
                   <TableCell>University</TableCell>
                   <TableCell>Faculty</TableCell>
                   <TableCell>Membership</TableCell>
-                  <TableCell>Attened events</TableCell>
+                  <TableCell>Events</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -385,8 +431,8 @@ const MemberListResults = ({ members, ...rest }) => {
                       <TableCell>
                         <Button
                           variant="outlined"
-                          onChange={(event) =>
-                            handleDisplayEvents(event, member)
+                          onClick={(event) =>
+                            handleDisplayEvents(member)
                           }
                         >
                           View
@@ -408,6 +454,17 @@ const MemberListResults = ({ members, ...rest }) => {
           rowsPerPageOptions={[5, 10, 25]}
         />
       </Card>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+      >
+        <DialogTitle>
+          <div>{userDetails.firstname.charAt(0).toUpperCase() + userDetails.firstname.slice(1) + ' is interested in ' + userEvents.length + ' event(s)'}</div>
+        </DialogTitle>
+        <DialogContent dividers>
+          {userEvents.map((event) => <ul key={event} style={{ 'padding': '1px' }}>{event}</ul>)}
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
