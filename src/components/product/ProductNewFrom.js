@@ -29,7 +29,7 @@ const ProductNewFrom = () => {
   const [startTime, setstartTime] = useState('');
   const [eventImgUrl, seteventImgUrl] = useState('');
   const [wechatImgUrl, setwechatImgUrl] = useState('');
-  const [formURL, setFormURL] = useState('');
+  const [googleSheetUrl, setFormURL] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -75,7 +75,7 @@ const ProductNewFrom = () => {
     try {
       const time = startDate + startTime;
       const eventForm = {
-        googleSheetURL: formURL,
+        googleSheetURL: googleSheetUrl,
         questions: inputList
       };
       eventImgUrl.replace('download', 'view');
@@ -88,7 +88,7 @@ const ProductNewFrom = () => {
         eventPrice,
         eventImgUrl,
         wechatImgUrl,
-        eventForm
+        googleSheetUrl,
       };
 
       console.log(info);
@@ -249,6 +249,18 @@ const ProductNewFrom = () => {
                 </Grid>
                 <Grid item md={6} sm={6} xs={12}>
                   <FormGroup style={{ marginTop: 15 }}>
+                    <TextField
+                      // error={Boolean(touched.lastName && errors.lastName)}
+                      fullWidth
+                      // helperText={touched.lastName && errors.lastName}
+                      label="Google sheet url"
+                      style={{ marginTop: theme.spacing(4.7) }}
+                      onBlur={handleBlur}
+                      onChange={(e) => {
+                        setFormURL(e.target.value);
+                      }}
+                      variant="outlined"
+                    />
                     <FormControlLabel
                       control={
                         <Checkbox
@@ -260,19 +272,6 @@ const ProductNewFrom = () => {
                       label="Requrie additional form - Fill in the section below"
                     />
                   </FormGroup>
-                  <TextField
-                    disabled={!checked}
-                    // error={Boolean(touched.lastName && errors.lastName)}
-                    fullWidth
-                    // helperText={touched.lastName && errors.lastName}
-                    label="Google sheet url"
-                    style={{ marginTop: theme.spacing(4.7) }}
-                    onBlur={handleBlur}
-                    onChange={(e) => {
-                      setFormURL(e.target.value);
-                    }}
-                    variant="outlined"
-                  />
                   <Typography
                     style={{
                       textDecoration: 'underline',
