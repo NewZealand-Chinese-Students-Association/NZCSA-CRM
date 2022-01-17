@@ -99,7 +99,7 @@ const rowsAdmin = [
     `${api.admin}add-events`,
     'POST',
     'authToken',
-    '{eventName, eventLocation, eventDescription, time, eventPrice, eventImgUrl}'
+    '{eventName, eventLocation, eventDescription, time, eventPrice, eventImgUrl,"googleSheetUrl"}'
   ),
   createData(
     `${api.admin}delete-events`,
@@ -120,6 +120,12 @@ const rowsAdmin = [
     'DELETE',
     'authToken',
     '{ "userId": "60d04e9e8ffae49fc174a3fb" }'
+  ),
+  createData(
+    `${api.admin}modify-events`,
+    'POST',
+    'authToken',
+    '{ "eventId", "eventName","eventLocation","eventDescription", "time":null, "eventPrice":null, "eventImgUrl","googleSheetUrl"}'
   )
 ];
 
