@@ -26,6 +26,7 @@ const ProductModifyFrom = ({ card }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [wechatImgUrl, setwechatImgUrl] = useState('');
+  const [googleSheetUrl, setGoogleSheetUrl] = useState(card.googleSheetUrl);
 
   const handleSubmit = async (f) => {
     f.preventDefault();
@@ -55,7 +56,8 @@ const ProductModifyFrom = ({ card }) => {
         time,
         eventPrice,
         eventImgUrl,
-        wechatImgUrl
+        wechatImgUrl,
+        googleSheetUrl
       };
 
       //   console.log(info);
@@ -201,6 +203,19 @@ const ProductModifyFrom = ({ card }) => {
                   error={Boolean(touched.firstName && errors.firstName)}
                   fullWidth
                   helperText={touched.firstName && errors.firstName}
+                  label="Google Sheet URL"
+                  margin="normal"
+                  onBlur={handleBlur}
+                  onChange={(e) => {
+                    setwechatImgUrl(e.target.value);
+                  }}
+                  variant="outlined"
+                  defaultValue={card.googleSheetUrl}
+                />
+                <TextField
+                  error={Boolean(touched.firstName && errors.firstName)}
+                  fullWidth
+                  helperText={touched.firstName && errors.firstName}
                   label="Wechat Group QRCode Image URL"
                   margin="normal"
                   onBlur={handleBlur}
@@ -208,7 +223,6 @@ const ProductModifyFrom = ({ card }) => {
                     setwechatImgUrl(e.target.value);
                   }}
                   variant="outlined"
-                  defaultValue={card.wechatImgUrl}
                 />
 
                 {Boolean(touched.policy && errors.policy) && (
