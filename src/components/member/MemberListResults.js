@@ -18,7 +18,7 @@ import {
   InputAdornment,
   SvgIcon,
   DialogTitle,
-  DialogContent,
+  DialogContent
 } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import 'react-confirm-alert/src/react-confirm-alert.css';
@@ -132,8 +132,8 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
       message: 'Contact the IT department or the CoreTeam',
       buttons: [
         {
-          label: 'Ok',
-        },
+          label: 'Ok'
+        }
       ]
     });
   };
@@ -167,7 +167,10 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
   .then(window.location.href = '/app/members');
   */
       if (selectedIndex === -1) {
-        newSelectedMemberIds = newSelectedMemberIds.concat(selectedMemberIds, id);
+        newSelectedMemberIds = newSelectedMemberIds.concat(
+          selectedMemberIds,
+          id
+        );
       } else if (selectedIndex === 0) {
         newSelectedMemberIds = newSelectedMemberIds.concat(
           selectedMemberIds.slice(1)
@@ -197,7 +200,7 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
     let list = [];
     setUserDetails(details);
     // for each attended event, add to list, push event name to list if it's a valid event
-    (details.attendedEvents).forEach((e) => {
+    details.attendedEvents.forEach((e) => {
       if (e in eventData) {
         list.push(eventData[e].eventName);
       }
@@ -367,7 +370,8 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
                   <TableCell>Gender</TableCell>
                   <TableCell>Phone</TableCell>
                   <TableCell>University</TableCell>
-                  <TableCell>Faculty</TableCell>
+                  {/* <TableCell>Faculty</TableCell> */}
+                  <TableCell>Wechat Id</TableCell>
                   <TableCell>Membership</TableCell>
                   <TableCell>Events</TableCell>
                 </TableRow>
@@ -408,7 +412,8 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
                       <TableCell>{member.gender}</TableCell>
                       <TableCell>{member.phone}</TableCell>
                       <TableCell>{member.university}</TableCell>
-                      <TableCell>{member.faculty}</TableCell>
+                      {/* <TableCell>{member.faculty}</TableCell> */}
+                      <TableCell>{member.wechatId}</TableCell>
                       <TableCell>
                         <FormControlLabel
                           control={
@@ -431,9 +436,7 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
                       <TableCell>
                         <Button
                           variant="outlined"
-                          onClick={(event) =>
-                            handleDisplayEvents(member)
-                          }
+                          onClick={(event) => handleDisplayEvents(member)}
                         >
                           View
                         </Button>
@@ -454,15 +457,22 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
           rowsPerPageOptions={[5, 10, 25]}
         />
       </Card>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-      >
+      <Dialog open={open} onClose={handleClose}>
         <DialogTitle>
-          <div>{userDetails.firstname.charAt(0).toUpperCase() + userDetails.firstname.slice(1) + ' is interested in ' + userEvents.length + ' event(s)'}</div>
+          <div>
+            {userDetails.firstname.charAt(0).toUpperCase() +
+              userDetails.firstname.slice(1) +
+              ' is interested in ' +
+              userEvents.length +
+              ' event(s)'}
+          </div>
         </DialogTitle>
         <DialogContent dividers>
-          {userEvents.map((event) => <ul key={event} style={{ 'padding': '1px' }}>{event}</ul>)}
+          {userEvents.map((event) => (
+            <ul key={event} style={{ padding: '1px' }}>
+              {event}
+            </ul>
+          ))}
         </DialogContent>
       </Dialog>
     </>

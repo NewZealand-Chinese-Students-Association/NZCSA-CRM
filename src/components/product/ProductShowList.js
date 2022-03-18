@@ -76,6 +76,8 @@ export default function ProductShowList(userMembers) {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [searchInfo, setSearchInfo] = useState('');
 
+  console.log(userMembers);
+
   useEffect(() => {
     if (searchInfo === '') {
       setUsers(userMembers.userMembers);
@@ -145,6 +147,7 @@ export default function ProductShowList(userMembers) {
               <StyledTableCell align="right">Name</StyledTableCell>
               <StyledTableCell align="right">Email</StyledTableCell>
               <StyledTableCell align="right">Gender</StyledTableCell>
+              <StyledTableCell align="right">Wechat Id</StyledTableCell>
               {/* <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell> */}
             </TableRow>
           </TableHead>
@@ -163,6 +166,11 @@ export default function ProductShowList(userMembers) {
                     <StyledTableCell align="right">{row.email}</StyledTableCell>
                     <StyledTableCell align="right">
                       {row.gender}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {row.wechatId != undefined
+                        ? row.wechatId
+                        : 'No Wechat Id'}
                     </StyledTableCell>
                     {/* <StyledTableCell align="right">{row.protein}</StyledTableCell> */}
                   </StyledTableRow>
