@@ -13,19 +13,24 @@ const Log = () => {
       Authorization: `Bearer ${localStorage.getItem('authToken')}`
     }
   };
-  const [members, setMembers] = useState([]);
+  const [logs, setLogs] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      axios.get('https://nzcsa-backend.herokuapp.com/api/admin/show-member-list', config)
+      axios
+        .get(
+          'https://nzcsa-backend.herokuapp.com/api/admin/show-log-info',
+          config
+        )
         .then((res) => {
           setLoading(false);
-          setMembers((res.data).reverse());
+          setLogs(res.data.reverse());
         });
     };
     fetchData();
   }, []);
+
   return (
     <>
       <Helmet>
@@ -43,9 +48,8 @@ const Log = () => {
             {loading ? (
               <CircularProgress color="inherit" size="2rem" />
             ) : (
-              <LogList />
+              <LogList logs={logs} />
             )}
-
           </Box>
         </Container>
       </Box>
