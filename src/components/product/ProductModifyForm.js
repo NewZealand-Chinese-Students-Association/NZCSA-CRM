@@ -21,13 +21,14 @@ const ProductModifyFrom = ({ card }) => {
     card.eventDescription
   );
 
-  const [startDate, setstartDate] = useState(card.startTime.toLocaleString().slice(0, 10));
-  console.log(card.startTime);
-  const [startTime, setstartTime] = useState('');
+  const [startDate, setstartDate] = useState(card.startTime.toLocaleString().slice(0, 10)); //  Keep only date part from the Date object as the format yyyy-MM-dd.
+  console.log(card.startTime.toLocaleString());
+  const [startTime, setstartTime] = useState((card.startTime.toLocaleString().slice(11, 16)));
   const [eventImgUrl, seteventImgUrl] = useState(card.eventImgUrl);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [wechatImgUrl, setwechatImgUrl] = useState(card.wechatImgUrl);
+  console.log(wechatImgUrl);
   const [googleSheetUrl, setGoogleSheetUrl] = useState(card.googleSheetUrl);
 
   const handleSubmit = async (f) => {
@@ -63,12 +64,12 @@ const ProductModifyFrom = ({ card }) => {
       };
 
       console.log(info);
-      // await axios.post(
-      //   'https://nzcsa-backend.herokuapp.com/api/admin/modify-events',
-      //   info,
-      //   config
-      // );
-      // window.location.href = '/app/products';
+      await axios.post(
+        'https://nzcsa-backend.herokuapp.com/api/admin/modify-events',
+        info,
+        config
+      );
+      window.location.href = '/app/products';
     } catch (e) {
       setError(e.response.data.error);
       setLoading(false);
@@ -189,6 +190,7 @@ const ProductModifyFrom = ({ card }) => {
                   }}
                   variant="outlined"
                   type="time"
+                  value={startTime}
                 />
                 <TextField
                   error={Boolean(touched.firstName && errors.firstName)}
@@ -210,7 +212,7 @@ const ProductModifyFrom = ({ card }) => {
                   margin="normal"
                   onBlur={handleBlur}
                   onChange={(e) => {
-                    setwechatImgUrl(e.target.value);
+                    setGoogleSheetUrl(e.target.value);
                   }}
                   variant="outlined"
                   defaultValue={card.googleSheetUrl}
@@ -226,6 +228,7 @@ const ProductModifyFrom = ({ card }) => {
                     setwechatImgUrl(e.target.value);
                   }}
                   variant="outlined"
+                  defaultValue={wechatImgUrl}
                 />
 
                 {Boolean(touched.policy && errors.policy) && (
