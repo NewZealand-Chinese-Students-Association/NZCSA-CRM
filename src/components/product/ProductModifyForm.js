@@ -20,12 +20,14 @@ const ProductModifyFrom = ({ card }) => {
   const [eventDescription, seteventDescription] = useState(
     card.eventDescription
   );
-  const [startDate, setstartDate] = useState('');
+
+  const [startDate, setstartDate] = useState(card.startTime.toLocaleString().slice(0, 10));
+  console.log(card.startTime);
   const [startTime, setstartTime] = useState('');
-  const [eventImgUrl, seteventImgUrl] = useState('');
+  const [eventImgUrl, seteventImgUrl] = useState(card.eventImgUrl);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [wechatImgUrl, setwechatImgUrl] = useState('');
+  const [wechatImgUrl, setwechatImgUrl] = useState(card.wechatImgUrl);
   const [googleSheetUrl, setGoogleSheetUrl] = useState(card.googleSheetUrl);
 
   const handleSubmit = async (f) => {
@@ -60,13 +62,13 @@ const ProductModifyFrom = ({ card }) => {
         googleSheetUrl
       };
 
-      //   console.log(info);
-      await axios.post(
-        'https://nzcsa-backend.herokuapp.com/api/admin/modify-events',
-        info,
-        config
-      );
-      window.location.href = '/app/products';
+      console.log(info);
+      // await axios.post(
+      //   'https://nzcsa-backend.herokuapp.com/api/admin/modify-events',
+      //   info,
+      //   config
+      // );
+      // window.location.href = '/app/products';
     } catch (e) {
       setError(e.response.data.error);
       setLoading(false);
@@ -172,6 +174,7 @@ const ProductModifyFrom = ({ card }) => {
                     setstartDate(e.target.value);
                   }}
                   type="date"
+                  value={startDate}
                 />
                 <TextField
                   error={Boolean(touched.password && errors.password)}

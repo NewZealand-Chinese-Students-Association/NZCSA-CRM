@@ -168,6 +168,7 @@ const PastEventCard = ({ product, ...rest }) => {
               variant="body2"
             >
               {new Date(product.startTime).toLocaleString()}
+              {console.log(product.startTime)}
             </Typography>
           </Grid>
         </Grid>
