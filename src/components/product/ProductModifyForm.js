@@ -27,6 +27,7 @@ const ProductModifyFrom = ({ card }) => {
   const [loading, setLoading] = useState(false);
   const [wechatImgUrl, setwechatImgUrl] = useState('');
   const [googleSheetUrl, setGoogleSheetUrl] = useState(card.googleSheetUrl);
+  const [googleFormUrl, setGoogleFormUrl] = useState(card.googleFormUrl);
 
   const handleSubmit = async (f) => {
     f.preventDefault();
@@ -57,10 +58,10 @@ const ProductModifyFrom = ({ card }) => {
         eventPrice,
         eventImgUrl,
         wechatImgUrl,
-        googleSheetUrl
+        googleSheetUrl,
+        googleFormUrl
       };
 
-      //   console.log(info);
       await axios.post(
         'https://nzcsa-backend.herokuapp.com/api/admin/modify-events',
         info,
@@ -207,10 +208,23 @@ const ProductModifyFrom = ({ card }) => {
                   margin="normal"
                   onBlur={handleBlur}
                   onChange={(e) => {
-                    setwechatImgUrl(e.target.value);
+                    setGoogleSheetUrl(e.target.value);
                   }}
                   variant="outlined"
                   defaultValue={card.googleSheetUrl}
+                />
+                <TextField
+                  error={Boolean(touched.googleFormUrl && errors.googleFormUrl)}
+                  fullWidth
+                  helperText={touched.googleFormUrl && errors.googleFormUrl}
+                  label="Google Form URL"
+                  margin="normal"
+                  onBlur={handleBlur}
+                  onChange={(e) => {
+                    setGoogleFormUrl(e.target.value);
+                  }}
+                  variant="outlined"
+                  defaultValue={card.googleFormUrl}
                 />
                 <TextField
                   error={Boolean(touched.firstName && errors.firstName)}
