@@ -61,7 +61,7 @@ const ProductModifyFrom = ({ card }) => {
         googleSheetUrl
       };
 
-      //console.log(info);
+      //  console.log(info);
       await axios.post(
         'https://nzcsa-backend.herokuapp.com/api/admin/modify-events',
         info,
