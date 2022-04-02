@@ -27,7 +27,6 @@ const ProductModifyFrom = ({ card }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [wechatImgUrl, setwechatImgUrl] = useState(card.wechatImgUrl);
-  console.log(wechatImgUrl);
   const [googleSheetUrl, setGoogleSheetUrl] = useState(card.googleSheetUrl);
 
   const handleSubmit = async (f) => {
@@ -62,7 +61,7 @@ const ProductModifyFrom = ({ card }) => {
         googleSheetUrl
       };
 
-      //  console.log(info);
+      //console.log(info);
       await axios.post(
         'https://nzcsa-backend.herokuapp.com/api/admin/modify-events',
         info,
