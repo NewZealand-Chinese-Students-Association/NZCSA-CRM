@@ -21,9 +21,8 @@ const ProductModifyFrom = ({ card }) => {
     card.eventDescription
   );
 
-  const [startDate, setstartDate] = useState(card.startTime.toLocaleString().slice(0, 10)); //  Keep only date part from the Date object as the format yyyy-MM-dd.
-  console.log(card.startTime.toLocaleString());
-  const [startTime, setstartTime] = useState((card.startTime.toLocaleString().slice(11, 16)));
+  const [selectedDate, setselectedDate] = useState(card.startTime.toLocaleString().slice(0, 10)); //  Keep only date part from the Date object as the format yyyy-MM-dd.
+  const [selectedTime, setselectedTime] = useState((card.startTime.toLocaleString().slice(11, 16)));
   const [eventImgUrl, seteventImgUrl] = useState(card.eventImgUrl);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -45,7 +44,7 @@ const ProductModifyFrom = ({ card }) => {
     }, 8000);
 
     try {
-      const time = startDate + startTime;
+      const startTime = selectedDate + 'T' + selectedTime + 'Z';
 
       const eventId = card._id;
 
@@ -56,14 +55,14 @@ const ProductModifyFrom = ({ card }) => {
         eventName,
         eventLocation,
         eventDescription,
-        time,
+        startTime,
         eventPrice,
         eventImgUrl,
         wechatImgUrl,
         googleSheetUrl
       };
 
-      console.log(info);
+      //  console.log(info);
       await axios.post(
         'https://nzcsa-backend.herokuapp.com/api/admin/modify-events',
         info,
@@ -172,10 +171,10 @@ const ProductModifyFrom = ({ card }) => {
                   margin="normal"
                   name="password"
                   onChange={(e) => {
-                    setstartDate(e.target.value);
+                    setselectedDate(e.target.value);
                   }}
                   type="date"
-                  value={startDate}
+                  value={selectedDate}
                 />
                 <TextField
                   error={Boolean(touched.password && errors.password)}
@@ -186,11 +185,11 @@ const ProductModifyFrom = ({ card }) => {
                   name="password"
                   onBlur={handleBlur}
                   onChange={(e) => {
-                    setstartTime(e.target.value);
+                    setselectedTime(e.target.value);
                   }}
                   variant="outlined"
                   type="time"
-                  value={startTime}
+                  value={selectedTime}
                 />
                 <TextField
                   error={Boolean(touched.firstName && errors.firstName)}
