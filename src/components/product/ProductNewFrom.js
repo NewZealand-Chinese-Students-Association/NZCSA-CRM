@@ -30,6 +30,7 @@ const ProductNewFrom = () => {
   const [eventImgUrl, seteventImgUrl] = useState('');
   const [wechatImgUrl, setwechatImgUrl] = useState('');
   const [googleSheetUrl, setFormURL] = useState('');
+  const [googleFormUrl, setGoogleURL] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -89,6 +90,7 @@ const ProductNewFrom = () => {
         eventImgUrl,
         wechatImgUrl,
         googleSheetUrl,
+        googleFormUrl
       };
 
       console.log(info);
@@ -248,15 +250,32 @@ const ProductNewFrom = () => {
                   )}
                 </Grid>
                 <Grid item md={6} sm={6} xs={12}>
-                  <FormGroup style={{ marginTop: 15 }}>
+
+                  <TextField
+                    error={Boolean(touched.googleFormUrl && errors.googleFormUrl)}
+                    fullWidth
+                    helperText={touched.googleFormUrl && errors.googleFormUrl}
+                    label="Google Form url"
+                    margin="normal"
+                    name="googleFormUrl"
+                    onBlur={handleBlur}
+                    onChange={(e) => {
+                      setGoogleURL(e.target.value);
+                    }}
+                    variant="outlined"
+                  />
+
+                  <FormGroup>
                     <TextField
-                      // error={Boolean(touched.lastName && errors.lastName)}
+                      error={Boolean(touched.googleSheetUrl && errors.googleSheetUrl)}
                       fullWidth
-                      // helperText={touched.lastName && errors.lastName}
-                      label="Google sheet url"
-                      style={{ marginTop: theme.spacing(4.7) }}
+                      helperText={touched.googleSheetUrl && errors.googleSheetUrl}
+                      name="googleSheetUrl"
                       onBlur={handleBlur}
+                      sx={{ mt: 2 }}
+                      label="Google sheet url"
                       onChange={(e) => {
+                        console.log(e.target.value);
                         setFormURL(e.target.value);
                       }}
                       variant="outlined"
@@ -272,6 +291,7 @@ const ProductNewFrom = () => {
                       label="Requrie additional form - Fill in the section below"
                     />
                   </FormGroup>
+
                   <Typography
                     style={{
                       textDecoration: 'underline',
