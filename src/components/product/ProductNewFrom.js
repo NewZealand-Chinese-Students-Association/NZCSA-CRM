@@ -71,9 +71,14 @@ const ProductNewFrom = () => {
     setTimeout(() => {
       setLoading(false);
     }, 8000);
-
+    let startTime = null;
     try {
-      const startTime = selectedDate + 'T' + selectedTime + 'Z';
+      if (selectedDate && selectedDate) {
+        startTime = selectedDate + 'T' + selectedTime + 'Z';
+      } else {
+        setError('Event start time cannot be blank! Please fill in the time.');
+        return;
+      }
       const eventForm = {
         googleSheetURL: googleSheetUrl,
         questions: inputList
