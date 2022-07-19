@@ -13,7 +13,8 @@ const coreTeamList = {
   Garfield: 'wany190@aucklanduni.ac.nz',
   Tony: 'tonycui02@gmail.com',
   Zhiqin: '60fe7eafeb548f00043af05b',
-  Linkun: 'gaolinkun123@gmail.com'
+  Linkun: 'gaolinkun123@gmail.com',
+  Alex: 'alex5453743@gmail.com'
 };
 
 export default Object.values(coreTeamList);
