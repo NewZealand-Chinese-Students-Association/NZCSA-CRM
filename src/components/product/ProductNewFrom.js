@@ -25,8 +25,8 @@ const ProductNewFrom = () => {
   const [eventLocation, seteventLocation] = useState('');
   const [eventPrice, seteventPrice] = useState('');
   const [eventDescription, seteventDescription] = useState('');
-  const [startDate, setstartDate] = useState('');
-  const [startTime, setstartTime] = useState('');
+  const [selectedDate, setselectedDate] = useState('');
+  const [selectedTime, setselectedTime] = useState('');
   const [eventImgUrl, seteventImgUrl] = useState('');
   const [wechatImgUrl, setwechatImgUrl] = useState('');
   const [googleSheetUrl, setFormURL] = useState('');
@@ -71,9 +71,14 @@ const ProductNewFrom = () => {
     setTimeout(() => {
       setLoading(false);
     }, 8000);
-
+    let startTime = null;
     try {
-      const time = startDate + startTime;
+      if (selectedDate && selectedDate) {
+        startTime = selectedDate + 'T' + selectedTime + 'Z';
+      } else {
+        setError('Event start time cannot be blank! Please fill in the time.');
+        return;
+      }
       const eventForm = {
         googleSheetURL: googleSheetUrl,
         questions: inputList
@@ -84,14 +89,13 @@ const ProductNewFrom = () => {
         eventName,
         eventLocation,
         eventDescription,
-        time,
+        startTime,
         eventPrice,
         eventImgUrl,
         wechatImgUrl,
         googleSheetUrl,
       };
-
-      console.log(info);
+      //  console.log(info);
       await axios.post(
         'https://nzcsa-backend.herokuapp.com/api/admin/add-events',
         info,
@@ -200,7 +204,7 @@ const ProductNewFrom = () => {
                     margin="normal"
                     name="password"
                     onChange={(e) => {
-                      setstartDate(e.target.value);
+                      setselectedDate(e.target.value);
                     }}
                     type="date"
                   />
@@ -213,7 +217,7 @@ const ProductNewFrom = () => {
                     name="password"
                     onBlur={handleBlur}
                     onChange={(e) => {
-                      setstartTime(e.target.value);
+                      setselectedTime(e.target.value);
                     }}
                     variant="outlined"
                     type="time"
