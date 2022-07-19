@@ -43,6 +43,12 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
   const [searchInfo, setSearchInfo] = useState('');
   const [membersInfo, setMembersInfo] = useState([]);
   const advancedAdmin = coreTeamList.includes(localStorage.getItem('email'));
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('authToken')}`
+    }
+  };
   const [notify, setNotify] = useState({
     isOpen: false,
     message: '',
@@ -57,13 +63,6 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const changeMembershipStatus = async (id) => {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('authToken')}`
-      }
-    };
-
     try {
       console.log(id);
       await axios.post(
@@ -136,20 +135,6 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
         }
       ]
     });
-  };
-
-  const handleSelectAll = (event) => {
-    let newSelectedMemberIds;
-
-    if (event.target.checked) {
-      newSelectedMemberIds = members.map((member) => member._id);
-      setDeleteButton(false);
-    } else {
-      newSelectedMemberIds = [];
-      setDeleteButton(true);
-    }
-
-    setSelectedMemberIds(newSelectedMemberIds);
   };
 
   const handleSelectOne = (event, id) => {
@@ -248,13 +233,6 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
 
   const handleDelete = async () => {
     setLoading(true);
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('authToken')}`
-      }
-    };
-
     try {
       console.log(selectedMemberIds[0]);
       await axios.delete(
