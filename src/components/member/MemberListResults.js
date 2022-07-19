@@ -137,6 +137,20 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
     });
   };
 
+  const handleSelectAll = (event) => {
+    let newSelectedMemberIds;
+
+    if (event.target.checked) {
+      newSelectedMemberIds = members.map((member) => member._id);
+      setDeleteButton(false);
+    } else {
+      newSelectedMemberIds = [];
+      setDeleteButton(true);
+    }
+
+    setSelectedMemberIds(newSelectedMemberIds);
+  };
+
   const handleSelectOne = (event, id) => {
     if (!advancedAdmin) {
       contactOthers();
