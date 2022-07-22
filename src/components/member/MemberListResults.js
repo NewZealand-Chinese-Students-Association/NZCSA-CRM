@@ -205,9 +205,6 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
         list.push(eventData[e].eventName);
       }
     });
-    if (list.length == 0) {
-      list.push('Nothing to see here');
-    }
     setUserEventList(list);
     setOpen(true);
   };
@@ -460,11 +457,7 @@ const MemberListResults = ({ members, eventData, ...rest }) => {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>
           <div>
-            {userDetails.firstname.charAt(0).toUpperCase() +
-              userDetails.firstname.slice(1) +
-              ' is interested in ' +
-              userEvents.length +
-              ' event(s)'}
+            {userEvents.length > 0 ? userDetails.firstname.charAt(0).toUpperCase() + userDetails.firstname.slice(1) + ' is interested in ' + userEvents.length + ' event(s)' : 'Nothing to see here'}
           </div>
         </DialogTitle>
         <DialogContent dividers>
