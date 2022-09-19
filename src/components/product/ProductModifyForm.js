@@ -32,7 +32,6 @@ const ProductModifyFrom = ({ card }) => {
   const [loading, setLoading] = useState(false);
   const [wechatImgUrl, setwechatImgUrl] = useState(card.wechatImgUrl);
   const [googleSheetUrl, setGoogleSheetUrl] = useState(card.googleSheetUrl);
-  const [eventFormUrl, seteventFormUrl] = useState(card.eventFormUrl);
 
   const handleSubmit = async (f) => {
     f.preventDefault();
@@ -63,8 +62,7 @@ const ProductModifyFrom = ({ card }) => {
         eventPrice,
         eventImgUrl,
         wechatImgUrl,
-        googleSheetUrl,
-        eventGoogleForm
+        googleSheetUrl
       };
 
       //  console.log(info);
@@ -220,19 +218,6 @@ const ProductModifyFrom = ({ card }) => {
                   }}
                   variant="outlined"
                   defaultValue={card.googleSheetUrl}
-                />
-                <TextField
-                  error={Boolean(touched.firstName && errors.firstName)}
-                  fullWidth
-                  helperText={touched.firstName && errors.firstName}
-                  label="Event Google Form"
-                  margin="normal"
-                  onBlur={handleBlur}
-                  onChange={(e) => {
-                    seteventFormUrl(e.target.value);
-                  }}
-                  variant="outlined"
-                  defaultValue={card.eventFormUrl}
                 />
                 <TextField
                   error={Boolean(touched.firstName && errors.firstName)}
