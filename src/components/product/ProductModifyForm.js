@@ -75,7 +75,6 @@ const ProductModifyFrom = ({ card }) => {
       );
       window.location.href = '/app/products';
     } catch (e) {
-      console.log(e);
       setError(e.response.data.error);
       setLoading(false);
       setTimeout(() => {
