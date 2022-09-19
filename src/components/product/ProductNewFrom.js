@@ -34,6 +34,7 @@ const ProductNewFrom = () => {
   const [loading, setLoading] = useState(false);
   const [checked, setChecked] = useState(false);
   const [inputList, setInputList] = useState(['']);
+  const [eventGoogleForm, seteventFormUrl] = useState('');
 
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
@@ -94,8 +95,9 @@ const ProductNewFrom = () => {
         eventImgUrl,
         wechatImgUrl,
         googleSheetUrl,
+        eventGoogleForm
       };
-      //  console.log(info);
+      console.log(info);
       await axios.post(
         'https://nzcsa-backend.herokuapp.com/api/admin/add-events',
         info,
@@ -246,7 +248,18 @@ const ProductNewFrom = () => {
                     }}
                     variant="outlined"
                   />
-
+                  <TextField
+                    error={Boolean(touched.firstName && errors.firstName)}
+                    fullWidth
+                    helperText={touched.firstName && errors.firstName}
+                    label="Event Google Form"
+                    margin="normal"
+                    onBlur={handleBlur}
+                    onChange={(e) => {
+                      seteventFormUrl(e.target.value);
+                    }}
+                    variant="outlined"
+                  />
                   {Boolean(touched.policy && errors.policy) && (
                     <FormHelperText error>{errors.policy}</FormHelperText>
                   )}

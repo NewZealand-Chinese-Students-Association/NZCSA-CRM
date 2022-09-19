@@ -21,8 +21,12 @@ const ProductModifyFrom = ({ card }) => {
     card.eventDescription
   );
 
-  const [selectedDate, setselectedDate] = useState(card.startTime.toLocaleString().slice(0, 10)); //  Keep only date part from the Date object as the format yyyy-MM-dd.
-  const [selectedTime, setselectedTime] = useState((card.startTime.toLocaleString().slice(11, 16)));
+  const [selectedDate, setselectedDate] = useState(
+    card.startTime.toLocaleString().slice(0, 10)
+  ); //  Keep only date part from the Date object as the format yyyy-MM-dd.
+  const [selectedTime, setselectedTime] = useState(
+    card.startTime.toLocaleString().slice(11, 16)
+  );
   const [eventImgUrl, seteventImgUrl] = useState(card.eventImgUrl);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -47,7 +51,9 @@ const ProductModifyFrom = ({ card }) => {
 
       const eventId = card._id;
 
-      eventImgUrl.replace('download', 'view');
+      if (eventImgUrl != null) {
+        eventImgUrl.replace('download', 'view');
+      }
 
       const info = {
         eventId,
