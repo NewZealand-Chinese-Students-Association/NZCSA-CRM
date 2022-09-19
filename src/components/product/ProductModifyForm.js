@@ -51,7 +51,9 @@ const ProductModifyFrom = ({ card }) => {
 
       const eventId = card._id;
 
-      eventImgUrl.replace('download', 'view');
+      if (eventImgUrl != null) {
+        eventImgUrl.replace('download', 'view');
+      }
 
       const info = {
         eventId,
@@ -73,6 +75,7 @@ const ProductModifyFrom = ({ card }) => {
       );
       window.location.href = '/app/products';
     } catch (e) {
+      console.log(e);
       setError(e.response.data.error);
       setLoading(false);
       setTimeout(() => {
