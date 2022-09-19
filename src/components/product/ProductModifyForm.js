@@ -21,13 +21,18 @@ const ProductModifyFrom = ({ card }) => {
     card.eventDescription
   );
 
-  const [selectedDate, setselectedDate] = useState(card.startTime.toLocaleString().slice(0, 10)); //  Keep only date part from the Date object as the format yyyy-MM-dd.
-  const [selectedTime, setselectedTime] = useState((card.startTime.toLocaleString().slice(11, 16)));
+  const [selectedDate, setselectedDate] = useState(
+    card.startTime.toLocaleString().slice(0, 10)
+  ); //  Keep only date part from the Date object as the format yyyy-MM-dd.
+  const [selectedTime, setselectedTime] = useState(
+    card.startTime.toLocaleString().slice(11, 16)
+  );
   const [eventImgUrl, seteventImgUrl] = useState(card.eventImgUrl);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [wechatImgUrl, setwechatImgUrl] = useState(card.wechatImgUrl);
   const [googleSheetUrl, setGoogleSheetUrl] = useState(card.googleSheetUrl);
+  const [eventFormUrl, seteventFormUrl] = useState(card.eventFormUrl);
 
   const handleSubmit = async (f) => {
     f.preventDefault();
@@ -58,7 +63,8 @@ const ProductModifyFrom = ({ card }) => {
         eventPrice,
         eventImgUrl,
         wechatImgUrl,
-        googleSheetUrl
+        googleSheetUrl,
+        eventGoogleForm
       };
 
       //  console.log(info);
@@ -214,6 +220,19 @@ const ProductModifyFrom = ({ card }) => {
                   }}
                   variant="outlined"
                   defaultValue={card.googleSheetUrl}
+                />
+                <TextField
+                  error={Boolean(touched.firstName && errors.firstName)}
+                  fullWidth
+                  helperText={touched.firstName && errors.firstName}
+                  label="Event Google Form"
+                  margin="normal"
+                  onBlur={handleBlur}
+                  onChange={(e) => {
+                    seteventFormUrl(e.target.value);
+                  }}
+                  variant="outlined"
+                  defaultValue={card.eventFormUrl}
                 />
                 <TextField
                   error={Boolean(touched.firstName && errors.firstName)}
